@@ -26,9 +26,30 @@ function readContent(name, kind = 'posts') {
   });
 }
 
+function readAll(kind = 'posts') {
+  const directoryPath = path.join(__dirname, '../content', kind);
+  return new Promise((resolve, reject) => {
+    fs.readdir(directoryPath, 'utf8', (err, files) => {
+      if (err) {
+        reject(new Error(err));
+      } else {
+        resolve(files);
+      }
+    });
+  });
+}
+
 /* GET home page. */
-router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' });
+router.get('/', async (req, res, next) => {
+  try {
+    const allPosts = await readAll('posts');
+    res.render('index', {
+      title: 'javaniceday.com – Software development blog. Java, Node JS, Salesforce among other technologies',
+      posts: allPosts,
+    });
+  } catch (e) {
+    next(e);
+  }
 });
 
 router.get('/post/:name', async (req, res, next) => {

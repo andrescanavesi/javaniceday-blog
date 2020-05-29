@@ -1,0 +1,163 @@
+const moment = require('moment');
+
+moment.locale('en');
+
+const FlexSearch = require('flexsearch');
+const log4js = require('log4js');
+const dbHelper = require('../utils/db_helper');
+
+const logger = log4js.getLogger('utils/db_helper.js');
+
+const preset = 'fast';
+const searchIndex = new FlexSearch(preset);
+
+let allPosts = [];
+
+/**
+ *
+ * @param {*} row
+ */
+function convertPost(row) {
+  const result = {
+    title: row.title,
+    title_seo: row.title_seo,
+    created_at: row.created_at,
+    created_at: row.created_at,
+  };
+
+  return result;
+}
+
+async function findWithLimit(limit) {
+  logger.info(`findWithLimit, limit: ${limit}`);
+  const query = 'SELECT * FROM posts WHERE active=true ORDER BY created_at DESC LIMIT $1 ';
+  const bindings = [limit];
+
+  const result = await dbHelper.query(query, bindings, true);
+  logger.info(`posts: ${result.rows.length}`);
+  const posts = [];
+  for (let i = 0; i < result.rows.length; i++) {
+    posts.push(convertPost(result.rows[i]));
+  }
+  return posts;
+}
+
+module.exports.resetCache = async function () {
+  allPosts = [];
+  await this.buildSearchIndex();
+};
+
+
+module.exports.findAll = async function () {
+  if (allPosts.length === 0) {
+    allPosts = findWithLimit(1000);
+  }
+  return allPosts;
+};
+
+/**
+ *
+ * @param {number} id
+ * @param {boolean} ignoreActive true to find active true and false
+ * @param {boolean} witchCache
+ */
+module.exports.findById = async function (id, ignoreActive, witchCache = true) {
+  if (!id) {
+    throw Error('id param not defined');
+  }
+  let query;
+  if (ignoreActive === true) {
+    query = 'SELECT * FROM posts WHERE id = $1 LIMIT 1';
+  } else {
+    query = 'SELECT * FROM posts WHERE active=true AND id = $1 LIMIT 1';
+  }
+
+  const bindings = [id];
+  // log.info(sqlFormatter.format(query));
+  logger.info(`findById, bindings: ${bindings}`);
+  const result = await dbHelper.query(query, bindings, witchCache);
+  if (result.rows.length > 0) {
+    const post = convertPost(result.rows[0]);
+
+
+    return post;
+  }
+  throw Error(`post not found by id ${id}`);
+};
+
+async function findByIds(ids) {
+  if (!ids) {
+    throw Error('ids param not defined');
+  }
+  logger.info('findByIds');
+  // log.info(ids);
+  for (let i = 0; i < ids.length; i++) {
+    if (isNaN(ids[i])) {
+      throw new Error(`Seems '${ids[i]}' is not a number`);
+    }
+  }
+  // in this case we concatenate string instead of using bindings. Something to improve
+  const query = `SELECT * FROM posts WHERE active=true AND id IN (${ids}) LIMIT 100`;
+  const bindings = [];
+  // log.info(sqlFormatter.format(query));
+  // log.info("bindings: " + bindings);
+  const result = await dbHelper.query(query, bindings, true);
+  const posts = [];
+  for (let i = 0; i < result.rows.length; i++) {
+    posts.push(convertPost(result.rows[i]));
+  }
+  return posts;
+}
+
+module.exports.buildSearchIndex = async function () {
+  // console.time('buildIndexTook');
+  logger.info('building index...');
+
+  const all = await this.findAll();
+
+  const size = all.length;
+  for (let i = 0; i < size; i++) {
+    // we might concatenate the fields we want for our content
+    const content = `${all[i].title} ${all[i].tags}`;
+    const key = parseInt(all[i].id);
+    searchIndex.add(key, content);
+  }
+  logger.info(`index built, length: ${searchIndex.length}`);
+  // console.timeEnd('buildIndexTook');
+};
+
+/**
+   * @param {string} text to search
+   */
+module.exports.findRelated = async function (text) {
+  logger.info(`look for related results with: ${text}`);
+  if (this.searchIndex.length === 0) {
+    await this.buildSearchIndex();
+  }
+
+  const resultIds = await this.searchIndex.search({
+    query: text,
+    limit: 12,
+    suggest: true, // When suggestion is enabled all results will be filled up (until limit, default 1000) with similar matches ordered by relevance.
+  });
+
+  logger.info(`related results: ${resultIds.length}`);
+  let results = [];
+  if (resultIds.length > 0) {
+    results = await this.findByIds(resultIds);
+  }
+
+  if (results.length < 10) {
+    logger.info('not enought related posts, result will filled up with more posts');
+    const moreRecipes = await findWithLimit(10);
+    results = results.concat(moreRecipes);
+  }
+
+  return results;
+};
+
+module.exports.deleteDummyData = async function () {
+  const query = "DELETE FROM posts WHERE title_seo = 'from-test'";
+  const result = await dbHelper.query(query, [], false);
+  logger.info(result);
+};
