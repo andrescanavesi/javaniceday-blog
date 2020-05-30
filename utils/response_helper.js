@@ -6,7 +6,7 @@ const moment = require('moment');
 module.exports.getResponseJson = function (req) {
   // default attributes for the response response.
   const responseJson = {};
-  responseJson.title = 'javaniceday.com';
+  responseJson.title = 'javaniceday.com – Software development blog.';
   responseJson.today = moment().format('YYYY-MM-DD');
   responseJson.isProduction = process.env.NODE_ENV === 'production' || false;
   responseJson.adsenseEnabled = process.env.JND_ADSENSE_ENABLED || false;
@@ -15,7 +15,7 @@ module.exports.getResponseJson = function (req) {
   responseJson.createdAt = moment().format('YYYY-MM-DD');
   responseJson.updatedAt = moment().format('YYYY-MM-DD');
   responseJson.linkToThisPage = process.env.JND_BASE_URL || 'http://localhost:3000';
-  responseJson.description = 'javaniceday.com.';
+  responseJson.description = 'javaniceday.com – Software development blog.';
   responseJson.metaImage = process.env.JND_DEFAULT_IMAGE_URL;
   responseJson.keywords = 'software, development';
   responseJson.searchText = '';

@@ -2,6 +2,8 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const log4js = require('log4js');
+const daoPosts = require('../daos/dao_posts');
+const responseHelper = require('../utils/response_helper');
 
 const router = express.Router();
 
@@ -42,11 +44,13 @@ function readAll(kind = 'posts') {
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   try {
-    const allPosts = await readAll('posts');
-    res.render('index', {
-      title: 'javaniceday.com – Software development blog. Java, Node JS, Salesforce among other technologies',
-      posts: allPosts,
-    });
+    const responseJson = responseHelper.getResponseJson(req);
+    const posts = await daoPosts.findAll();
+
+    responseJson.posts = posts;
+    responseJson.isHomePage = true;
+    responseJson.searchText = '';
+    res.render('index', responseJson);
   } catch (e) {
     next(e);
   }

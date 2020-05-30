@@ -7,7 +7,14 @@ const log4js = require('log4js');
 const queryCache = new NodeCache();
 const logger = log4js.getLogger('utils/db_helper.js');
 
-const dbConfig = parseDbUrl(process.env.DATABASE_URL);
+let dbConfig;
+let rejectUnauthorized = true;
+if (process.env.NODE_ENV === 'development') {
+  dbConfig = parseDbUrl(process.env.JND_DATABASE_URL);
+  rejectUnauthorized = false;
+} else {
+  dbConfig = parseDbUrl(process.env.DATABASE_URL);
+}
 
 const pool = new Pool({
   user: dbConfig.user,
@@ -15,7 +22,10 @@ const pool = new Pool({
   database: dbConfig.database,
   password: dbConfig.password,
   port: dbConfig.port,
-  ssl: true,
+  ssl: {
+    rejectUnauthorized,
+  },
+
 });
 
 /**

@@ -1,5 +1,8 @@
-const createError = require('http-errors');
+// const createError = require('http-errors');
 const express = require('express');
+const useragent = require('express-useragent');
+const favicon = require('express-favicon');
+const compression = require('compression');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const log4js = require('log4js');
@@ -9,10 +12,13 @@ const indexRouter = require('./routes/index');
 const logger = log4js.getLogger('app.js');
 
 const app = express();
+app.use(compression());
+app.use(useragent.express());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+app.use(favicon(`${__dirname}/public/images/favicon.png`));
 
 // app.use(logger('dev'));
 app.use(express.json());

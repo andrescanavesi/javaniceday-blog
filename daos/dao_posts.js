@@ -6,7 +6,7 @@ const FlexSearch = require('flexsearch');
 const log4js = require('log4js');
 const dbHelper = require('../utils/db_helper');
 
-const logger = log4js.getLogger('utils/db_helper.js');
+const logger = log4js.getLogger('utils/dao_posts.js');
 
 const preset = 'fast';
 const searchIndex = new FlexSearch(preset);
@@ -22,7 +22,11 @@ function convertPost(row) {
     title: row.title,
     title_seo: row.title_seo,
     created_at: row.created_at,
-    created_at: row.created_at,
+    updated_at: row.updated_at,
+    content: row.content,
+    active: row.active,
+    featured_image_name: row.featured_image_name,
+    tags: row.tags,
   };
 
   return result;
@@ -85,7 +89,10 @@ module.exports.findById = async function (id, ignoreActive, witchCache = true) {
   throw Error(`post not found by id ${id}`);
 };
 
-async function findByIds(ids) {
+/**
+ *
+ */
+module.exports.findByIds = async function (ids) {
   if (!ids) {
     throw Error('ids param not defined');
   }
@@ -107,7 +114,7 @@ async function findByIds(ids) {
     posts.push(convertPost(result.rows[i]));
   }
   return posts;
-}
+};
 
 module.exports.buildSearchIndex = async function () {
   // console.time('buildIndexTook');
