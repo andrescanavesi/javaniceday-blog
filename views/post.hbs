@@ -1,3 +1,28 @@
+ 
+      <script async="async" defer="true" charset="UTF-8" type="application/ld+json">
+          {
+          "@context":"http://schema.org",
+          "@type": "BlogPosting",
+          "image": "{{post.featured_image_url}}",
+          "url": "{{post.linkToThisPage}}",
+          "headline": "{{post.title}}",
+          "dateCreated": "{{post.created_at_friendly_2}}",
+          "datePublished": "{{post.created_at_friendly_2}}",
+          "dateModified": "{{post.updated_at_friendly_2}}",
+          "inLanguage": "en-US",
+          "author": {
+            "@type": "Person",
+            "name": "Andres Canavesi",
+            "url": "https://javaniceday.com"
+          },
+          "mainEntityOfPage": "True",
+          "keywords": {{post.tags_array}},
+          "articleBody": "{{post.content}}"
+        }
+      </script>
+  
+
+
 <div class="container">
 
      <!-- Title -->

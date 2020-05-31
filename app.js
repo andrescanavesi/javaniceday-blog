@@ -18,7 +18,7 @@ app.use(useragent.express());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-app.use(favicon(`${__dirname}/public/images/favicon.png`));
+app.use(favicon(`${__dirname}/public/images/favicon.jpg`));
 
 // app.use(logger('dev'));
 app.use(express.json());

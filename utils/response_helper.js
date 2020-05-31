@@ -27,7 +27,7 @@ module.exports.getResponseJson = function (req) {
   responseJson.isDesktop = req.useragent.isDesktop;
 
   // structured data
-  responseJson.pageType = 'Website';
+  responseJson.pageType = 'Blog';
   responseJson.pageName = 'javaniceday.com';
   responseJson.pageOrganization = 'javaniceday.com';
   responseJson.pageImage = process.env.JND_DEFAULT_IMAGE_URL;
@@ -42,13 +42,12 @@ module.exports.getResponseJson = function (req) {
   responseJson.author = 'Andres Canavesi';
   responseJson.publisher = 'Andres Canavesi';
 
-  responseJson.googleAnalyticsId = ''; // TODO
-  responseJson.googleAdsenseId = ''; // TODO
-
   responseJson.currentYear = moment().format('YYYY');
 
   responseJson.lang = 'en';
   responseJson.locale = 'en_EN';
+
+  responseJson.isPostPage = false;
 
 
   return responseJson;

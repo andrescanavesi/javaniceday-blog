@@ -26,13 +26,16 @@ function convertPost(row) {
     title_seo: row.title_seo,
     created_at: row.created_at,
     created_at_friendly: moment(row.created_at).format('MMM DD, YYYY'),
+    created_at_friendly_2: moment(row.created_at).format('YYYY-MM-DD'),
     updated_at: row.updated_at,
     updated_at_friendly: moment(row.updated_at).format('MMM DD, YYYY'),
+    updated_at_friendly_2: moment(row.updated_at).format('YYYY-MM-DD'),
     content: row.content,
     summary: row.summary,
     active: row.active,
     featured_image_url: baseImagesUrl + row.featured_image_name,
     tags: row.tags,
+    tags_array: row.tags.split(','),
   };
 
   return result;

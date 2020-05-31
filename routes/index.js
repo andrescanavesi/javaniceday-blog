@@ -59,9 +59,13 @@ router.get('/', async (req, res, next) => {
 router.get('/post/:titleSeo', async (req, res, next) => {
   try {
     logger.info(`title seo: ${req.params.titleSeo}`);
-    const data = await daoPosts.findByTitleSeo(req.params.titleSeo);
+    const post = await daoPosts.findByTitleSeo(req.params.titleSeo);
     const responseJson = responseHelper.getResponseJson(req);
-    responseJson.post = data;
+    responseJson.post = post;
+    responseJson.title = post.title;
+    responseJson.description = post.summary;
+    responseJson.isPostPage = true;
+    responseJson.linkToThisPage = `${process.env.JND_BASE_URL}/post/${post.title_seo}`;
     res.render('post', responseJson);
   } catch (e) {
     next(e);
@@ -74,6 +78,7 @@ router.get('/tag/:tag', async (req, res, next) => {
     const data = await daoPosts.findByTag(req.params.tag, true);
     const responseJson = responseHelper.getResponseJson(req);
     responseJson.posts = data;
+    responseJson.title = `${req.params.tag} - javaniceday.com`;
     res.render('index', responseJson);
   } catch (e) {
     next(e);
