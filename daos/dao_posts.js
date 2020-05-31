@@ -6,7 +6,8 @@ const FlexSearch = require('flexsearch');
 const log4js = require('log4js');
 const dbHelper = require('../utils/db_helper');
 
-const logger = log4js.getLogger('utils/dao_posts.js');
+const logger = log4js.getLogger('dao_posts');
+logger.level = 'info';
 
 const preset = 'fast';
 const searchIndex = new FlexSearch(preset);
@@ -92,6 +93,54 @@ module.exports.findById = async function (id, ignoreActive, witchCache = true) {
     return post;
   }
   throw Error(`post not found by id ${id}`);
+};
+
+/**
+ *
+ * @param {number} titleSeo
+ * @param {boolean} witchCache
+ */
+module.exports.findByTitleSeo = async function (titleSeo, witchCache = true) {
+  if (!titleSeo) {
+    throw Error('titleSeo param not defined');
+  }
+  const query = 'SELECT * FROM posts WHERE active=true AND title_seo = $1 LIMIT 1';
+
+
+  const bindings = [titleSeo];
+  // log.info(sqlFormatter.format(query));
+  logger.info(`findByTitleSeo, bindings: ${bindings}`);
+  const result = await dbHelper.query(query, bindings, witchCache);
+  if (result.rows.length > 0) {
+    const post = convertPost(result.rows[0]);
+
+
+    return post;
+  }
+  throw Error(`post not found by name ${titleSeo}`);
+};
+
+/**
+ *
+ * @param {number} titleSeo
+ * @param {boolean} witchCache
+ */
+module.exports.findByTag = async function (tag, witchCache = true) {
+  if (!tag) {
+    throw Error('tag param not defined');
+  }
+  const tagLike = '%tag1%';
+  const bindings = [tagLike];
+  const query = 'SELECT * FROM posts WHERE active=true AND tags LIKE $1 ORDER BY created_at DESC LIMIT 20';
+
+  logger.info(`findByTag, bindings: ${bindings}`);
+  const result = await dbHelper.query(query, bindings, witchCache);
+
+  const posts = [];
+  for (let i = 0; i < result.rows.length; i++) {
+    posts.push(convertPost(result.rows[i]));
+  }
+  return posts;
 };
 
 /**

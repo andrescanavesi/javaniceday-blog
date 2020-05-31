@@ -5,7 +5,8 @@ const NodeCache = require('node-cache');
 const log4js = require('log4js');
 
 const queryCache = new NodeCache();
-const logger = log4js.getLogger('utils/db_helper.js');
+const logger = log4js.getLogger('db_helper');
+logger.level = 'info';
 
 let dbConfig;
 let rejectUnauthorized = true;
@@ -35,7 +36,7 @@ const pool = new Pool({
  * @param {boolean} withCache true to cache the result
  * @return {Promise<*>}
  */
-async function query(theQuery, bindings, withCache) {
+module.exports.query = async function (theQuery, bindings, withCache) {
   if (withCache) {
     logger.info(`executing query with cache ${theQuery}`);
     const key = theQuery + JSON.stringify(bindings);
@@ -71,7 +72,6 @@ async function query(theQuery, bindings, withCache) {
       throw new Error(`Error executing query without cache  ${theQuery} error: ${error}`);
     }
   }
-}
+};
 
 module.exports.execute = pool;
-module.exports.query = query;

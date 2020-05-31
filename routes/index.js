@@ -56,10 +56,10 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/post/:id/:name', async (req, res, next) => {
+router.get('/post/:titleSeo', async (req, res, next) => {
   try {
-    // :name parameter is ignores. It's just for SEO purposes
-    const data = await daoPosts.findById(req.params.id);
+    logger.info(`title seo: ${req.params.titleSeo}`);
+    const data = await daoPosts.findByTitleSeo(req.params.titleSeo);
     const responseJson = responseHelper.getResponseJson(req);
     responseJson.post = data;
     res.render('post', responseJson);
@@ -68,14 +68,25 @@ router.get('/post/:id/:name', async (req, res, next) => {
   }
 });
 
-router.get('/page/:name', async (req, res, next) => {
+router.get('/tag/:tag', async (req, res, next) => {
   try {
-    const data = await readContent(req.params.name, 'pages');
-    res.render('content', { title: 'Im a page', content: data });
+    logger.info(`tag: ${req.params.tag}`);
+    const data = await daoPosts.findByTag(req.params.tag, true);
+    const responseJson = responseHelper.getResponseJson(req);
+    responseJson.posts = data;
+    res.render('index', responseJson);
   } catch (e) {
     next(e);
   }
 });
 
+router.get('/:year/:month/:day/:name', async (req, res, next) => {
+  try {
+    const page = `/${req.params.name}`;
+    res.redirect(page);
+  } catch (e) {
+    next(e);
+  }
+});
 
 module.exports = router;

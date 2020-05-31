@@ -4,7 +4,7 @@ CREATE TABLE posts (
     updated_at timestamp with time zone NOT NULL,
     title character varying(120) NOT NULL,
     title_seo character varying(100) NOT NULL,
-    content character varying(1000) NOT NULL,
+    content character varying(3000) NOT NULL,
     summary character varying(300) NOT NULL,
     active boolean NOT NULL DEFAULT false,
     featured_image_name character varying(200) NOT NULL,

@@ -9,6 +9,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+  
+
     <title>{{title}}</title>
   </head>
   <body>
@@ -29,7 +32,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/page/about">About</a>
+            <a class="nav-link" href="/post/about">About</a>
           </li>
         </ul>
       </div>
@@ -41,6 +44,10 @@
 
     <div class="row">
 
+      <div class="col-md-2">
+
+      </div>
+
       <!-- Post Content Column -->
       <div class="col-lg-8">
 
@@ -49,10 +56,10 @@
       </div>
 
       <!-- Sidebar Widgets Column -->
-      <div class="col-md-4">
+      <div class="col-md-2">
 
         <!-- Search Widget -->
-        <div class="card my-4">
+        <div class="card my-4 d-none">
           <h5 class="card-header">Search</h5>
           <div class="card-body">
             <div class="input-group">
@@ -65,7 +72,7 @@
         </div>
 
         <!-- Categories Widget -->
-        <div class="card my-4">
+        <div class="card my-4 d-none">
           <h5 class="card-header">Categories</h5>
           <div class="card-body">
             <div class="row">
@@ -100,7 +107,7 @@
         </div>
 
         <!-- Side Widget -->
-        <div class="card my-4">
+        <div class="card my-4 d-none">
           <h5 class="card-header">Side Widget</h5>
           <div class="card-body">
             You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
@@ -128,5 +135,8 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 
 
-<h1 class="my-4">Page Heading</h1>
+<h1 class="my-4 d-none">Page Heading</h1>
   {{#each posts}}
     <!-- Blog Post -->
     <div class="card mb-4">
@@ -8,7 +8,7 @@
           <div class="card-body">
             <h2 class="card-title">{{this.title}}</h2>
             <p class="card-text">{{this.summary}}</p>
-            <a href="/post/{{this.id}}/{{this.title_seo}}" class="btn btn-primary">Read More →</a>
+            <a href="/post/{{this.title_seo}}" class="btn btn-primary">Read More →</a>
           </div>
           <div class="card-footer text-muted">
             Posted on January 1, 2017 
