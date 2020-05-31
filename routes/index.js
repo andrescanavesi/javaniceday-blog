@@ -56,10 +56,13 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/post/:name', async (req, res, next) => {
+router.get('/post/:id/:name', async (req, res, next) => {
   try {
-    const data = await readContent(req.params.name, 'posts');
-    res.render('content', { title: 'Im a post', content: data });
+    // :name parameter is ignores. It's just for SEO purposes
+    const data = await daoPosts.findById(req.params.id);
+    const responseJson = responseHelper.getResponseJson(req);
+    responseJson.post = data;
+    res.render('post', responseJson);
   } catch (e) {
     next(e);
   }
