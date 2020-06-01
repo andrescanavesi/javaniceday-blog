@@ -12,10 +12,10 @@ CREATE TABLE posts (
 );
 
 insert into posts ( created_at, updated_at, title, title_seo, "content", summary, active, featured_image_name, tags)
-values('2020-01-02', '2020-01-02', 'post 1', 'post-1', 'this is the content', 'the summary', true, 'vladislav-klapin-symzoee8qua-unsplash.jpg', 'tag1,tag2,tag3')
+values('2020-06-02', '2020-06-02', 'post 1', 'post-1', 'this is the content', 'the summary', true, 'vladislav-klapin-symzoee8qua-unsplash.jpg', 'tag1,tag2,tag3')
 
 insert into posts ( created_at, updated_at, title, title_seo, "content", summary, active, featured_image_name, tags)
-values('2020-01-02', '2020-01-02', 'post 2', 'post-2', 'this is the content','the summary', true, 'vladislav-klapin-symzoee8qua-unsplash.jpg', 'tag1,tag2,tag3')
+values('2020-06-02', '2020-06-02', 'post 2', 'post-2', 'this is the content','the summary', true, 'vladislav-klapin-symzoee8qua-unsplash.jpg', 'tag1,tag2,tag3')
 
 insert into posts ( created_at, updated_at, title, title_seo, "content", summary, active, featured_image_name, tags)
-values('2020-01-02', '2020-01-02', 'post 3', 'post-3', 'this is the content','the summary', true, 'vladislav-klapin-symzoee8qua-unsplash.jpg', 'tag1,tag2,tag3')
+values('2020-06-02', '2020-06-02', 'post 3', 'post-3', 'this is the content','the summary', true, 'vladislav-klapin-symzoee8qua-unsplash.jpg', 'tag1,tag2,tag3')

@@ -18,9 +18,11 @@
           gtag('config', 'UA-156358716-1');
       </script>
 
-      <!-- Adsense -->
-      <script data-ad-client="ca-pub-9559827534748081" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-      <script async="" custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
+      {{#if adsenseEnabled}}
+        <!-- Adsense -->
+        <script data-ad-client="ca-pub-9559827534748081" async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script async="" custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
+      {{/if}}
     {{/if}}
 
     <title>{{title}}</title>
