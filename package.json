@@ -8,15 +8,16 @@
     "test": "NODE_ENV=test nyc --check-coverage --lines 10 --per-file --reporter=html mocha tests/test_*.js --recursive --reporter mochawesome --reporter-options reportDir=./test_results --exit"
   },
   "dependencies": {
+    "compression": "^1.7.4",
     "cookie-parser": "~1.4.4",
     "debug": "^4.1.1",
     "express": "^4.17.1",
-    "express-useragent": "^1.0.13",
     "express-favicon": "^2.0.1",
-    "compression": "^1.7.4",
+    "express-useragent": "^1.0.13",
     "flexsearch": "^0.6.32",
     "hbs": "^4.1.1",
     "http-errors": "^1.7.3",
+    "js2xmlparser": "^4.0.1",
     "log4js": "^6.2.1",
     "moment": "^2.24.0",
     "morgan": "^1.10.0",

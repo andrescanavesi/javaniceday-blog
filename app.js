@@ -6,6 +6,7 @@ const compression = require('compression');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const log4js = require('log4js');
+const sitemapRouter = require('./routes/sitemap');
 
 const indexRouter = require('./routes/index');
 
@@ -27,6 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/sitemap.xml', sitemapRouter);
 
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {

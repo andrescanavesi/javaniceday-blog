@@ -4,7 +4,7 @@
 
     <link rel="preconnect" href="//stackpath.bootstrapcdn.com" crossorigin>
     
-    {{#if production}}
+    {{#if isProduction}}
       <!--Global site tag (gtag.js) - Google Analytics-->
       <link rel="preconnect" href="//googletagmanager.com" crossorigin>
       <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-156358716-1"></script>
@@ -44,9 +44,9 @@
     <meta name="description" content="{{description}}">
     <meta property="og:title" content="{{title}}">
     <meta property="og:description" content="{{description}}">
-    <meta property="og:url" content="{{link_to_this_page}}">
-    <meta property="og:image" content="{{featured_image_url}}">
-    <meta property="article:modified_time" content="2020-05-03">
+    <meta property="og:url" content="{{linkToThisPage}}">
+    <meta property="og:image" content="{{pageImage}}">
+    <meta property="article:modified_time" content="{{pageDateModified}}">
 
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <!-- Bootstrap CSS -->

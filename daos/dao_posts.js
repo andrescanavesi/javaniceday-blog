@@ -36,6 +36,7 @@ function convertPost(row) {
     featured_image_url: baseImagesUrl + row.featured_image_name,
     tags: row.tags,
     tags_array: row.tags.split(','),
+    url: `${process.env.JND_BASE_URL}post/${row.title_seo}`,
   };
 
   return result;
