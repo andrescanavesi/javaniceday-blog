@@ -59,7 +59,17 @@ router.get('/tag/:tag', async (req, res, next) => {
 router.get('/:year/:month/:day/:name', async (req, res, next) => {
   try {
     // redirect old posts from the old blog
-    const page = `/${req.params.name}`;
+    const page = `/post/${req.params.name}`;
+    res.redirect(page);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get('/category/:tag', async (req, res, next) => {
+  try {
+    // redirect old categories from the old blog
+    const page = `/tag/${req.params.tag}`;
     res.redirect(page);
   } catch (e) {
     next(e);

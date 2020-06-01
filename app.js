@@ -38,9 +38,14 @@ app.use('/sitemap.xml', sitemapRouter);
 // error handler
 app.use((err, req, res, next) => {
   logger.error(err);
+  res.locals.message = 'oops!';
+  res.locals.error = {};
   // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  if (process.env.NODE_ENV === 'development') {
+    res.locals.message = err.message;
+    res.locals.error = err;
+  }
+
 
   // render the error page
   res.status(err.status || 500);

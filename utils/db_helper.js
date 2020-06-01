@@ -6,10 +6,10 @@ const log4js = require('log4js');
 
 const queryCache = new NodeCache();
 const logger = log4js.getLogger('db_helper');
-logger.level = 'info';
+
 
 let dbConfig;
-let rejectUnauthorized = true;
+let rejectUnauthorized = false; // TODO fix this
 if (process.env.NODE_ENV === 'development') {
   dbConfig = parseDbUrl(process.env.JND_DATABASE_URL);
   rejectUnauthorized = false;
