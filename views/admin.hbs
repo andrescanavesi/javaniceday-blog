@@ -1,0 +1,32 @@
+
+
+<h1 class="my-4">Latests Posts</h1>
+
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Updated At</th>
+      <th scope="col">Active</th>
+      <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+      {{#each posts}}
+        <tr>
+          <th scope="row">{{this.id}}</th>
+          <td><a href="{{this.url}}">{{this.title}}</a></td>
+          <td>{{this.created_at_friendly_3}}</td>
+          <td>{{this.updated_at_friendly_3}}</td>
+          <td>{{this.active}}</td>
+          <td>
+            <a href="{{this.url_edit}}">Edit</a>
+          </td>
+        </tr>
+        
+      {{/each}}
+    </tbody>
+  </table>
+

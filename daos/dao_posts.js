@@ -27,9 +27,11 @@ function convertPost(row) {
     created_at: row.created_at,
     created_at_friendly: moment(row.created_at).format('MMM DD, YYYY'),
     created_at_friendly_2: moment(row.created_at).format('YYYY-MM-DD'),
+    created_at_friendly_3: moment(row.created_at).format('YYYY-MM-DD HH:mm:ss'),
     updated_at: row.updated_at,
     updated_at_friendly: moment(row.updated_at).format('MMM DD, YYYY'),
     updated_at_friendly_2: moment(row.updated_at).format('YYYY-MM-DD'),
+    updated_at_friendly_3: moment(row.updated_at).format('YYYY-MM-DD HH:mm:ss'),
     content: row.content,
     summary: row.summary,
     active: row.active,
@@ -37,14 +39,16 @@ function convertPost(row) {
     tags: row.tags,
     tags_array: row.tags.split(','),
     url: `${process.env.JND_BASE_URL}post/${row.title_seo}`,
+    url_edit: `${process.env.JND_BASE_URL}admin/edit/${row.id}`,
   };
 
   return result;
 }
 
-async function findWithLimit(limit) {
+async function findWithLimit(limit, onlyActives = true) {
   logger.info(`findWithLimit, limit: ${limit}`);
-  const query = 'SELECT * FROM posts WHERE active=true ORDER BY created_at DESC LIMIT $1 ';
+  const condActives = onlyActives ? ' WHERE active=true ' : '';
+  const query = `SELECT * FROM posts ${condActives} ORDER BY created_at DESC LIMIT $1 `;
   const bindings = [limit];
 
   const result = await dbHelper.query(query, bindings, true);
@@ -62,9 +66,9 @@ module.exports.resetCache = async function () {
 };
 
 
-module.exports.findAll = async function () {
+module.exports.findAll = async function (onlyActives = true) {
   if (allPosts.length === 0) {
-    allPosts = findWithLimit(1000);
+    allPosts = findWithLimit(1000, onlyActives);
   }
   return allPosts;
 };
