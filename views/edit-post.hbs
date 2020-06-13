@@ -1,19 +1,32 @@
-<form class="mb-3">
+<div class="text-muted mb-3">
+  Created at: {{post.created_at_friendly_3}} / 
+Updated at: {{post.updated_at_friendly_3}}
+</div>
+
+
+<form class="mb-3" action="{{post.url_edit}}" method="POST">
   <div class="form-group">
-    <input type="text" class="form-control" id="title" value="{{post.title}}">
+    <input type="text" class="form-control" id="title" name="title" value="{{post.title}}">
   </div>
   <div class="form-group">  
-  <textarea class="form-control" id="content" rows="10">
+  <textarea class="form-control" id="content" name="content" rows="20">
     {{post.content}}
+    
   </textarea>
 
   </div>
   <div class="form-group form-check">
-    <input type="checkbox" class="form-check-input" id="active">
+    <input type="checkbox" class="form-check-input" id="active" name="active" {{#if post.active}}checked{{/if}}>
     <label class="form-check-label" for="active">Active</label>
   </div>
   <button type="submit" class="btn btn-primary">Save</button>
 </form>
 
-<h3 class="border-top">Preview</h3>
+<hr />
+
+<h3 class="my-4">Preview</h3>
+
+<pre><code class="html">{{post.content}}</code></pre>
+
+<hr />
 {{{post.content}}}

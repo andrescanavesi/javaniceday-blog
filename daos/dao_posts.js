@@ -1,10 +1,12 @@
 const moment = require('moment');
+const pretty = require('pretty');
 
 moment.locale('en');
 
 const FlexSearch = require('flexsearch');
 const log4js = require('log4js');
 const dbHelper = require('../utils/db_helper');
+const utils = require('../utils/utils');
 
 const logger = log4js.getLogger('dao_posts');
 logger.level = 'info';
@@ -32,7 +34,7 @@ function convertPost(row) {
     updated_at_friendly: moment(row.updated_at).format('MMM DD, YYYY'),
     updated_at_friendly_2: moment(row.updated_at).format('YYYY-MM-DD'),
     updated_at_friendly_3: moment(row.updated_at).format('YYYY-MM-DD HH:mm:ss'),
-    content: row.content,
+    content: pretty(row.content),
     summary: row.summary,
     active: row.active,
     featured_image_url: baseImagesUrl + row.featured_image_name,
@@ -44,6 +46,27 @@ function convertPost(row) {
 
   return result;
 }
+
+module.exports.update = async function (post) {
+  logger.info(`Updating post ${post.id} ${post.title}`);
+  const today = moment().format('YYYY-MM-DD HH:mm:ss');
+  const query = `UPDATE posts 
+    SET title=$1, title_seo=$2 content=$3, active=$4, updated_at=$5
+    WHERE id=$6`;
+  const titleSeo = utils.dashString(post.title);
+  const bindings = [
+    post.title,
+    titleSeo,
+    post.content,
+    post.active,
+    today,
+    post.id,
+  ];
+
+  await dbHelper.query(query, bindings, false);
+
+  await this.resetCache();
+};
 
 async function findWithLimit(limit, onlyActives = true) {
   logger.info(`findWithLimit, limit: ${limit}`);
