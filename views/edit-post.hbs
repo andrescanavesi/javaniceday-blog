@@ -4,16 +4,30 @@ Updated at: {{post.updated_at_friendly_3}}
 </div>
 
 
-<form class="mb-3" action="{{post.url_edit}}" method="POST">
+<form class="mb-3" action="{{action}}" method="POST">
   <div class="form-group">
-    <input type="text" class="form-control" id="title" name="title" value="{{post.title}}">
+    <input type="text" class="form-control" id="title" name="title" value="{{post.title}}" placeholder="Title">
   </div>
   <div class="form-group">  
-  <textarea class="form-control" id="content" name="content" rows="20">
-    {{post.content}}
-    
-  </textarea>
-
+    <textarea class="form-control" id="content" name="content" rows="20" 
+    placeholder="Content", spellcheck="true">{{post.content}}</textarea>
+  </div>
+   <div class="form-group">  
+    <label class="form-check-label" for="summary">Summary</label>
+    <textarea class="form-control" id="summary" name="summary" rows="3"
+    spellcheck="true">
+      {{post.summary}}
+    </textarea>
+  </div>
+   <div class="form-group">
+    <label class="form-check-label" for="tags">Tags</label>
+    <input type="text" class="form-control" id="tags" name="tags" 
+    value="{{post.tags}}" placeholder="tag1 tag2, tag3">
+  </div>
+   <div class="form-group">
+    <label class="form-check-label" for="featured_image_name">Image name</label>
+    <input type="text" class="form-control" id="featured_image_name" name="featured_image_name" 
+    value="{{post.featured_image_name}}" placeholder="image-post.jpg">
   </div>
   <div class="form-group form-check">
     <input type="checkbox" class="form-check-input" id="active" name="active" {{#if post.active}}checked{{/if}}>
@@ -24,9 +38,15 @@ Updated at: {{post.updated_at_friendly_3}}
 
 <hr />
 
-<h3 class="my-4">Preview</h3>
+<h3 class="my-2">Preview</h3>
 
-<pre><code class="html">{{post.content}}</code></pre>
+<a href="{{post.url}}">{{post.url}}</a>
+
+<pre class="mt-2"><code class="html">{{post.content}}</code></pre>
+
+<img class="img-fluid" src="{{post.featured_image_url}}" alt="Post image" width="30%">
 
 <hr />
 {{{post.content}}}
+
+<hr class="my-3" />

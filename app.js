@@ -12,6 +12,7 @@ const adminRouter = require('./routes/admin');
 const sitemapRouter = require('./routes/sitemap');
 
 const logger = log4js.getLogger('app.js');
+logger.level = 'info';
 
 const app = express();
 app.use(compression());

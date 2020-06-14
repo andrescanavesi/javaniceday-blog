@@ -37,6 +37,7 @@ function convertPost(row) {
     content: pretty(row.content),
     summary: row.summary,
     active: row.active,
+    featured_image_name: row.featured_image_name,
     featured_image_url: baseImagesUrl + row.featured_image_name,
     tags: row.tags,
     tags_array: row.tags.split(','),
@@ -47,12 +48,46 @@ function convertPost(row) {
   return result;
 }
 
+module.exports.insert = async function (post) {
+  logger.info(`inserting post ${JSON.stringify(post, null, 2)}`);
+  const titleSeo = utils.dashString(post.title);
+  const today = moment().format('YYYY-MM-DD HH:mm:ss');
+  const query = `INSERT INTO posts(created_at, 
+    updated_at, 
+    title, 
+    title_seo, 
+    "content", 
+    summary, 
+    active, 
+    featured_image_name, 
+    tags) 
+  VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING id`;
+  const bindings = [
+    today,
+    today,
+    post.title,
+    titleSeo,
+    post.content,
+    post.summary,
+    post.active,
+    post.featured_image_name,
+    post.tags,
+  ];
+
+  const result = await dbHelper.query(query, bindings, false);
+  // logger.info(JSON.stringify(result, null, 2));
+  const postId = result.rows[0].id;
+
+  await this.resetCache();
+  return postId;
+};
 module.exports.update = async function (post) {
   logger.info(`Updating post ${post.id} ${post.title}`);
   const today = moment().format('YYYY-MM-DD HH:mm:ss');
   const query = `UPDATE posts 
-    SET title=$1, title_seo=$2 content=$3, active=$4, updated_at=$5
-    WHERE id=$6`;
+    SET title=$1, title_seo=$2, content=$3, active=$4, updated_at=$5,
+    summary=$6, featured_image_name=$7, tags=$8
+    WHERE id=$9`;
   const titleSeo = utils.dashString(post.title);
   const bindings = [
     post.title,
@@ -60,6 +95,9 @@ module.exports.update = async function (post) {
     post.content,
     post.active,
     today,
+    post.summary,
+    post.featured_image_name,
+    post.tags,
     post.id,
   ];
 

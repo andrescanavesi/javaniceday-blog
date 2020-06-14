@@ -17,10 +17,51 @@ router.get('/', async (req, res, next) => {
     const posts = await daoPosts.findAll(false);
 
     responseJson.posts = posts;
-    responseJson.isHomePage = false;
-    responseJson.searchText = '';
     responseJson.layout = 'layout-admin';
     res.render('admin', responseJson);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get('/create-post', async (req, res, next) => {
+  try {
+    const responseJson = responseHelper.getResponseJson(req);
+
+    responseJson.post = {
+      title: 'a s b',
+      title_seo: '',
+      content: 'abc',
+      summary: 'summ',
+      featured_image_name: 'featured_image_url.jpg',
+      tags: 'dev',
+      active: false,
+    };
+    responseJson.action = '/admin/create-post';
+    responseJson.layout = 'layout-admin';
+    res.render('edit-post', responseJson);
+  } catch (e) {
+    next(e);
+  }
+});
+
+
+router.post('/create-post', async (req, res, next) => {
+  try {
+    const post = {
+      title: req.body.title,
+      content: req.body.title,
+      summary: req.body.summary,
+      featured_image_name: req.body.featured_image_name,
+      tags: req.body.tags,
+      active: req.body.active === 'on',
+    };
+
+    const postId = await daoPosts.insert(post);
+
+    const postCreated = await daoPosts.findById(postId, true, false);
+
+    res.redirect(postCreated.url_edit);
   } catch (e) {
     next(e);
   }
@@ -32,8 +73,7 @@ router.get('/edit/:id', async (req, res, next) => {
     const post = await daoPosts.findById(req.params.id, true, false);
 
     responseJson.post = post;
-    responseJson.isHomePage = false;
-    responseJson.searchText = '';
+    responseJson.action = post.url_edit;
     responseJson.layout = 'layout-admin';
     res.render('edit-post', responseJson);
   } catch (e) {
@@ -49,6 +89,9 @@ router.post('/edit/:id', async (req, res, next) => {
     let post = await daoPosts.findById(req.params.id, true, false);
     post.title = req.body.title;
     post.content = req.body.content;
+    post.summary = req.body.summary;
+    post.tags = req.body.tags;
+    post.featured_image_name = req.body.featured_image_name;
     post.active = req.body.active === 'on';
 
     await daoPosts.update(post);
