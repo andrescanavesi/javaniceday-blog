@@ -28,11 +28,32 @@ router.get('/create-post', async (req, res, next) => {
   try {
     const responseJson = responseHelper.getResponseJson(req);
 
+    const defaultContent = `
+
+    <!-- Template -->
+    
+    <img src="https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,w_900/v1590442770/javaniceday.com/christopher-gower-m_HRfLhgABo-unsplash.jpg" class="rounded mx-auto d-block img-fluid" alt="image" />
+    
+    <p class="font-weight-bold">
+      Important stuff
+    </p>
+
+    <pre>
+      <code class="javascript">
+        // some code...
+      </code>
+    </pre>
+
+    <p class="font-weight-lighter">
+        Photo by...
+    </p>
+    `;
+
     responseJson.post = {
-      title: 'a s b',
+      title: '',
       title_seo: '',
-      content: 'abc',
-      summary: 'summ',
+      content: defaultContent,
+      summary: '',
       featured_image_name: 'christopher-gower-m_HRfLhgABo-unsplash.jpg',
       tags: 'dev',
       active: false,
@@ -50,7 +71,7 @@ router.post('/create-post', async (req, res, next) => {
   try {
     const post = {
       title: req.body.title,
-      content: req.body.title,
+      content: req.body.content,
       summary: req.body.summary,
       featured_image_name: req.body.featured_image_name,
       tags: req.body.tags,
