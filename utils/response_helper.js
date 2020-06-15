@@ -49,6 +49,7 @@ module.exports.getResponseJson = function (req) {
 
   responseJson.isPostPage = false;
 
+  responseJson.isAuthenticated = req.headers.authorization && req.headers.authorization.startsWith('Basic ');
 
   return responseJson;
 };
