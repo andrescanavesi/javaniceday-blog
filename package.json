@@ -12,6 +12,7 @@
     "cookie-parser": "~1.4.4",
     "debug": "^4.1.1",
     "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
     "express-favicon": "^2.0.1",
     "express-useragent": "^1.0.13",
     "flexsearch": "^0.6.32",

@@ -14,7 +14,7 @@ logger.level = 'info';
 router.get('/', async (req, res, next) => {
   try {
     const responseJson = responseHelper.getResponseJson(req);
-    const posts = await daoPosts.findAll(false);
+    const posts = await daoPosts.findAll(false, false);
 
     responseJson.posts = posts;
     responseJson.layout = 'layout-admin';
@@ -33,7 +33,7 @@ router.get('/create-post', async (req, res, next) => {
       title_seo: '',
       content: 'abc',
       summary: 'summ',
-      featured_image_name: 'featured_image_url.jpg',
+      featured_image_name: 'christopher-gower-m_HRfLhgABo-unsplash.jpg',
       tags: 'dev',
       active: false,
     };

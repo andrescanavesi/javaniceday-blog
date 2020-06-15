@@ -2,6 +2,7 @@
 const express = require('express');
 const useragent = require('express-useragent');
 const favicon = require('express-favicon');
+const basicAuth = require('express-basic-auth');
 const compression = require('compression');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -13,6 +14,24 @@ const sitemapRouter = require('./routes/sitemap');
 
 const logger = log4js.getLogger('app.js');
 logger.level = 'info';
+
+
+/**
+ *
+ * @returns {string} the text to be displayed when users hit on cancel prompt button
+ */
+function getUnauthorizedResponse() {
+  return 'Unauthorized';
+}
+
+// http auth basic options
+const authOptions = {
+  challenge: true, // it will cause most browsers to show a popup to enter credentials on unauthorized responses,
+  users: { admin: process.env.JND_HTTP_AUTH_BASIC_PASSWORD },
+  authorizeAsync: false,
+  unauthorizedResponse: getUnauthorizedResponse,
+};
+
 
 const app = express();
 app.use(compression());
@@ -30,13 +49,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/admin', adminRouter);
+// all requests to this route will require user and password
+app.use('/admin', basicAuth(authOptions), adminRouter);
 app.use('/sitemap.xml', sitemapRouter);
-
-// // catch 404 and forward to error handler
-// app.use(function(req, res, next) {
-//   next(createError(404));
-// });
 
 // error handler
 app.use((err, req, res, next) => {

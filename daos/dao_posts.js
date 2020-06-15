@@ -127,8 +127,12 @@ module.exports.resetCache = async function () {
 };
 
 
-module.exports.findAll = async function (onlyActives = true) {
-  if (allPosts.length === 0) {
+module.exports.findAll = async function (onlyActives = true, witchCache = true) {
+  if (witchCache) {
+    if (allPosts.length === 0) {
+      allPosts = findWithLimit(1000, onlyActives);
+    }
+  } else {
     allPosts = findWithLimit(1000, onlyActives);
   }
   return allPosts;
