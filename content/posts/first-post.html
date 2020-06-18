@@ -1,34 +1,246 @@
- <!-- Title -->
- <h1>First post</h1>
+<p>A good sitemap.xml will help you a lot in terms of SEO. It’s a nice starting point if you want to index your site. It’s just a standard XML file that search engines understand.</p>
 
- <hr>
+<p>Can be as simple as this one:</p>
 
- <!-- Date/Time -->
- <p>Posted on May 25, 2020</p>
+<pre>
+  <code class="xml">
+    &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"&gt;
+&lt;url&gt;
+  &lt;loc>https://javaniceday.com/</loc&gt;
+  &lt;lastmod>2019-11-18</lastmod&gt;
+  &lt;changefreq>monthly</changefreq&gt;
+  &lt;priority>0.8</priority&gt;
+&lt;/url&gt;
+&lt;/urlset&gt;
+  </code>
+</pre>
 
- <hr>
 
- <!-- Preview Image -->
- <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+You can see the complete list of tags definitions here: https://www.sitemaps.org/protocol.html
+<br />
+Let’s code a Node.js web app using Express.js framework to expose an endpoint that prints a well-formed sitemap XML
+<br />
+Install Express js globally to take advantage of Express generator
+<br />
 
- <hr>
+<code>sudo npm install express -g</code>
 
- <!-- Post Content -->
- <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
+Run this command to generate a default Express structure
 
- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
+<code>express --no-view --git node-sitemap-xml</code>
 
- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
+You should see something like this. It could be different depending on your Express version.
 
- <blockquote class="blockquote">
-   <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-   <footer class="blockquote-footer">Someone famous in
-     <cite title="Source Title">Source Title</cite>
-   </footer>
- </blockquote>
+<pre>
+      <code class="bash">
+       create : node-sitemap-xml/
+create : node-sitemap-xml/public/
+create : node-sitemap-xml/public/javascripts/
+create : node-sitemap-xml/public/images/
+create : node-sitemap-xml/public/stylesheets/
+create : node-sitemap-xml/public/stylesheets/style.css
+create : node-sitemap-xml/routes/
+create : node-sitemap-xml/routes/index.js
+create : node-sitemap-xml/routes/users.js
+create : node-sitemap-xml/public/index.html
+create : node-sitemap-xml/.gitignore
+create : node-sitemap-xml/app.js
+create : node-sitemap-xml/package.json
+create : node-sitemap-xml/bin/
+create : node-sitemap-xml/bin/www
+ 
+change directory:
+  $ cd node-sitemap-xml
+ 
+install dependencies:
+  $ npm install
+ 
+run the app:
+  $ DEBUG=node-sitemap-xml:* npm start
+      </code>
+    </pre>
 
- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
+Enter to the created folder
 
- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
+<code>cd node-sitemap-xml</code>
+Install dependencies
 
- <hr>
+<code>npm install</code>
+Let’s add a dependency to convert javaScript objects to XML
+
+<code>npm install js2xmlparser --save</code>
+Add Moment js as a dependency to deal with dates. Moment js it’s an awesome module to parse, format and manipulate dates. Strongly recommended
+
+<code>npm install moment --save</code>
+
+Create a new file called sitemap.js at the routes folder and paste this content.
+
+<pre>
+      <code class="javascript">
+      const express = require("express");
+const router = express.Router();
+ 
+const js2xmlparser = require("js2xmlparser");
+const moment = require("moment");
+ 
+/**
+ * It generates an standard sitemal.xml for SEO purposes
+ */
+router.get("/", function(req, res, next) {
+    try {
+        //our records to index
+        const records = getRecordsFromDataSource();
+        const collection = [];
+        let today = moment();
+        today = today.format("YYYY-MM-DD");
+        //add site root url
+        const rootUrl = {};
+        rootUrl.loc = "https://javaniceday.com/";
+        rootUrl.lastmod = today;
+        rootUrl.changefreq = "daily";
+        rootUrl.priority = "1.0";
+        rootUrl["image:image"] = {
+            "image:loc": "s://javaniceday.com/default-image.jpg",
+            "image:caption":
+                "javaniceday.com. Software development blog. Java, Node JS, Salesforce among other technologies",
+        };
+        collection.push(rootUrl);
+ 
+        //add recipes urls
+        for (let i = 0; i < records.length; i++) {
+            const url = {};
+            url.loc = records[i].url;
+            url.lastmod = records[i].updated_at;
+            url["image:image"] = {
+                "image:loc": records[i].featured_image_url,
+                "image:caption": records[i].description,
+            };
+ 
+            collection.push(url);
+        }
+        const col = {
+            "@": {
+                xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9",
+                "xmlns:image": "http://www.google.com/schemas/sitemap-image/1.1",
+            },
+            url: collection,
+        };
+        const xml = js2xmlparser.parse("urlset", col);
+        res.set("Content-Type", "text/xml");
+        res.status(200);
+        res.send(xml);
+    } catch (e) {
+        next(e);
+    }
+});
+ 
+/**
+ * @return a collections to index (typically we'll get these records from our database)
+ */
+function getRecordsFromDataSource() {
+    //these records will have our own structure, we return as they are and later we convert them to the xml standard format
+    //so let's just define two records hard-coded
+ 
+    const record1 = {
+        url: "https://javaniceday.com/2019/07/11/better-queue-in-node-js/",
+        description:
+            "Introduction A good practice in software development is to delegate as much heavy work as possible to background jobs",
+        featured_image_url: "https://javaniceday.com/example1.jpg",
+        updated_at: "2019-07-11",
+    };
+    const record2 = {
+        url: "https://javaniceday.com/2019/08/11/http-auth-basic-in-node-js-and-express/",
+        description: "A small site in Node.js using Express that will have one protected page Http auth basic prompt",
+        featured_image_url: "https://javaniceday.com/example1.jpg",
+        updated_at: "2019-07-11",
+    };
+    return [record1, record2];
+}
+ 
+module.exports = router;
+      </code>
+    </pre>
+
+Basically that code builds dynamically our sitemap XML. First, it creates a block for the home page and then iterates on our records that can be a mix of different types of records such as recipes, news, cars, etc. You will have to modify as necessary. Have in mind pagination if you have a big collection of records.
+
+As a last step modify the file app.js to add our route:
+
+<pre>
+      <code class="javascript">
+const sitemapRouter = require("./routes/sitemap");
+// (...)
+app.use("/sitemap.xml", sitemapRouter);
+      </code>
+    </pre>
+
+Run locally
+
+<code>npm start</code>
+
+Open your browser at
+
+http://localhost:3000/sitemap.xml
+
+And you will see this output:
+
+<pre>
+      <code class="xml">
+       <?xml version='1.0'?>
+<urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9' xmlns:image='http://www.google.com/schemas/sitemap-image/1.1'>
+    <url>
+        <loc>https://javaniceday.com/</loc>
+        <lastmod>2019-11-18</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+        <image:image>
+            <image:loc>s://javaniceday.com/default-image.jpg</image:loc>
+            <image:caption>javaniceday.com. Software development blog. Java, Node JS, Salesforce among other technologies</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://javaniceday.com/2019/07/11/better-queue-in-node-js/</loc>
+        <lastmod>2019-07-11</lastmod>
+        <image:image>
+            <image:loc>https://javaniceday.com/example1.jpg</image:loc>
+            <image:caption>Introduction A good practice in software development is to delegate as much heavy work as possible to background jobs</image:caption>
+        </image:image>
+    </url>
+    <url>
+        <loc>https://javaniceday.com/2019/08/11/http-auth-basic-in-node-js-and-express/</loc>
+        <lastmod>2019-07-11</lastmod>
+        <image:image>
+            <image:loc>https://javaniceday.com/example1.jpg</image:loc>
+            <image:caption>A small site in Node.js using Express that will have one protected page Http auth basic prompt</image:caption>
+        </image:image>
+    </url>
+</urlset>
+      </code>
+    </pre>
+
+After deploying the code in production you’ll want to give visibility to your sitemap.xml. I recommend your submit your url to the most used (nowadays) search engine: Google.
+
+Go to https://search.google.com/search-console and submit your url. Google will inspect it periodically
+
+See the full source code here: https://github.com/andrescanavesi/node-js-sitemap
+
+Photo by Annie Spratt on Unsplash
+
+<br /><br /><br /><br />
+<!-- Template -->
+
+<img src="https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,w_900/v1590442770/javaniceday.com/christopher-gower-m_HRfLhgABo-unsplash.jpg" class="rounded mx-auto d-block img-fluid" alt="image" />
+
+<p class="font-weight-bold">
+  Important stuff
+</p>
+
+<pre>
+      <code class="javascript">
+        // some code...
+      </code>
+    </pre>
+
+<p class="font-weight-lighter">
+  Photo by...
+</p>
