@@ -265,13 +265,14 @@ module.exports.buildSearchIndex = async function () {
    */
 module.exports.findRelated = async function (text) {
   logger.info(`look for related results with: ${text}`);
-  if (this.searchIndex.length === 0) {
+  if (searchIndex.length === 0) {
     await this.buildSearchIndex();
   }
 
-  const resultIds = await this.searchIndex.search({
+  const limit = 6;
+  const resultIds = await searchIndex.search({
     query: text,
-    limit: 12,
+    limit,
     suggest: true, // When suggestion is enabled all results will be filled up (until limit, default 1000) with similar matches ordered by relevance.
   });
 
@@ -281,10 +282,11 @@ module.exports.findRelated = async function (text) {
     results = await this.findByIds(resultIds);
   }
 
-  if (results.length < 10) {
+  const limitHalf = Math.round(limit / 2);
+  if (results.length < limitHalf) {
     logger.info('not enought related posts, result will filled up with more posts');
-    const moreRecipes = await findWithLimit(10);
-    results = results.concat(moreRecipes);
+    const morePosts = await findWithLimit(limitHalf);
+    results = results.concat(morePosts);
   }
 
   return results;

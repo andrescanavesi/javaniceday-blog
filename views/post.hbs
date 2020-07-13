@@ -53,5 +53,26 @@
   <a href="{{post.url_edit}}">Edit post</a>
 {{/if}}
 
+  <div id="related">
+    <h2>More posts</h2>
+    <div class="card-columns">
+      {{#each relatedPosts}}
+        <div class="card">
+          <img class="card-img-top" src="{{this.featured_image_url}}" alt="Post image cap">
+          <div class="card-body">
+            <a href="/post/{{this.title_seo}}">
+              {{this.title}}
+            </a>
+            
+            <p class="card-text">{{this.summary}}</p>
+            <p class="card-text">
+              <small class="text-muted">Posted on {{this.created_at_friendly}}</small>
+            </p>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+
+  </div> <!-- END related posts -->
     
-</div>
+</div> <!-- END container -->
