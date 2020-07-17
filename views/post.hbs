@@ -48,6 +48,10 @@
  {{{post.content}}}
  
  <hr>
+{{#each post.tags_array}}
+  <a href="/tag/{{this}}" class="btn btn-secondary">{{this}}</a>
+{{/each}}
+ <hr/>
 
 {{#if isAuthenticated}}
   <a href="{{post.url_edit}}">Edit post</a>
@@ -64,7 +68,6 @@
               {{this.title}}
             </a>
             
-            <p class="card-text">{{this.summary}}</p>
             <p class="card-text">
               <small class="text-muted">Posted on {{this.created_at_friendly}}</small>
             </p>

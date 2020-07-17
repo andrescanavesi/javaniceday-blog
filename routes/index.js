@@ -56,6 +56,7 @@ router.get('/tag/:tag', async (req, res, next) => {
     const responseJson = responseHelper.getResponseJson(req);
     responseJson.posts = data;
     responseJson.title = `${req.params.tag} - javaniceday.com`;
+    responseJson.page_header = req.params.tag;
     res.render('index', responseJson);
   } catch (e) {
     next(e);

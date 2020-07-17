@@ -202,7 +202,7 @@ module.exports.findByTag = async function (tag, witchCache = true) {
   if (!tag) {
     throw Error('tag param not defined');
   }
-  const tagLike = '%tag1%';
+  const tagLike = `%${tag}%`;
   const bindings = [tagLike];
   const query = 'SELECT * FROM posts WHERE active=true AND tags LIKE $1 ORDER BY created_at DESC LIMIT 20';
 
