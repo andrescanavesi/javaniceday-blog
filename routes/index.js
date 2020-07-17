@@ -38,10 +38,13 @@ router.get('/post/:titleSeo', async (req, res, next) => {
     responseJson.pageImage = post.featured_image_url;
     responseJson.pageDateModified = post.updated_at_friendly_2;
 
-    // TODO create a relatedposts collection
     const posts = await daoPosts.findRelated(post.tags);
 
     responseJson.relatedPosts = posts;
+
+    if (post.title_seo === 'about') {
+      responseJson.showRelatedPosts = false;
+    }
 
     res.render('post', responseJson);
   } catch (e) {
@@ -56,7 +59,7 @@ router.get('/tag/:tag', async (req, res, next) => {
     const responseJson = responseHelper.getResponseJson(req);
     responseJson.posts = data;
     responseJson.title = `${req.params.tag} - javaniceday.com`;
-    responseJson.page_header = req.params.tag;
+    responseJson.pageHeader = req.params.tag;
     res.render('index', responseJson);
   } catch (e) {
     next(e);

@@ -19,6 +19,7 @@ module.exports.getResponseJson = function (req) {
   responseJson.metaImage = process.env.JND_DEFAULT_IMAGE_URL;
   responseJson.keywords = 'software, development';
   responseJson.searchText = '';
+  responseJson.showRelatedPosts = true;
 
   const metaCache = process.env.JND_META_CACHE || '1'; // in seconds
   responseJson.metaCache = `public, max-age=${metaCache}`;
