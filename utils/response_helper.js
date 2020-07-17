@@ -9,7 +9,7 @@ module.exports.getResponseJson = function (req) {
   responseJson.title = 'javaniceday.com – Software development blog.';
   responseJson.today = moment().format('YYYY-MM-DD');
   responseJson.isProduction = process.env.NODE_ENV === 'production' || false;
-  responseJson.adsenseEnabled = process.env.JND_ADSENSE_ENABLED || false;
+  responseJson.adsenseEnabled = process.env.JND_ADSENSE_ENABLED === true || process.env.JND_ADSENSE_ENABLED === 'true';
   responseJson.isHomePage = false;
   responseJson.isPostPage = false;
   responseJson.createdAt = moment().format('YYYY-MM-DD');

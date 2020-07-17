@@ -1,8 +1,4 @@
  
- <!-- 
-     TODO improve this based on this result:
-        https://search.google.com/structured-data/testing-tool/u/0/?hl=es#url=https%3A%2F%2Fwww.hallaminternet.com%2Fadd-article-schema-markup-to-blog-posts%2F
- -->
       <script async="async" defer="true" charset="UTF-8" type="application/ld+json">
           {
           "@context":"http://schema.org",
@@ -21,7 +17,7 @@
           },
           "mainEntityOfPage": "True",
           "keywords": {{post.tags_array}},
-          "articleBody": "{{post.content}}"
+          "articleBody": "{{post.summary}}"
         }
       </script>
   
