@@ -2,6 +2,19 @@ body{
   padding-top: 56px;
 }
 
+#blog-header{
+  background: url('https://andrescanavesi.files.wordpress.com/2019/06/cropped-ilya-pavlov-oqtafyt5ktw-unsplash.jpg') no-repeat center;
+  background-size: cover;
+  background-attachment: scroll;
+  position: relative;
+  z-index: 9999;
+  min-height: 1em;
+  padding: 6em 2em;
+  text-align: center;
+  word-wrap: break-word;
+  color: rgba(255,255,255,.84);
+}
+
 .card-columns{
   column-count: 2 !important;
 }
