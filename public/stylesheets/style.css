@@ -1,9 +1,9 @@
 body{
-  padding-top: 56px;
+  padding-top: 0px;
 }
 
 #blog-header{
-  background: url('https://andrescanavesi.files.wordpress.com/2019/06/cropped-ilya-pavlov-oqtafyt5ktw-unsplash.jpg') no-repeat center;
+  background: url('https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,e_brightness:-62,w_1400/v1592504956/javaniceday.com/kevin-ku-w7zyugynprq-unsplash.jpg') no-repeat center;
   background-size: cover;
   background-attachment: scroll;
   position: relative;
@@ -13,8 +13,12 @@ body{
   text-align: center;
   word-wrap: break-word;
   color: rgba(255,255,255,.84);
+  
 }
 
+#blog-header-icons{
+  font-size: 2rem;
+}
 .card-columns{
   column-count: 2 !important;
 }
