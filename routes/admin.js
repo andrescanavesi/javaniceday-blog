@@ -10,15 +10,19 @@ const router = express.Router();
 const logger = log4js.getLogger('routes/admin.js');
 logger.level = 'info';
 
-const csrfProtection = csrf({ cookie: true });
+const csrfProtection = csrf({
+  cookie: true, signed: true, secure: true, httpOnly: true, sameSite: 'strict',
+});
+
 const parseForm = bodyParser.urlencoded({ extended: false });
 
 /**
  *  GET default admin page
  */
-router.get('/', async (req, res, next) => {
+router.get('/', csrfProtection, async (req, res, next) => {
   try {
     const responseJson = responseHelper.getResponseJson(req);
+    responseJson.csrfToken = req.csrfToken();
     const posts = await daoPosts.findAll(false, false);
 
     responseJson.posts = posts;
@@ -98,6 +102,10 @@ router.get('/edit/:id', csrfProtection, async (req, res, next) => {
   try {
     const responseJson = responseHelper.getResponseJson(req);
     responseJson.csrfToken = req.csrfToken();
+    console.info('====');
+    console.info(responseJson.csrfToken);
+    console.info(JSON.stringify(csrfProtection, null, 2));
+    console.info('====');
     const post = await daoPosts.findById(req.params.id, true, false);
 
     responseJson.post = post;
@@ -114,6 +122,7 @@ router.post('/edit/:id', parseForm, csrfProtection, async (req, res, next) => {
     logger.info(`save post ${req.params.id} ${req.body.title}`);
 
     const responseJson = responseHelper.getResponseJson(req);
+    responseJson.csrfToken = req.csrfToken();
     let post = await daoPosts.findById(req.params.id, true, false);
     post.title = req.body.title;
     post.content = req.body.content;
@@ -130,7 +139,7 @@ router.post('/edit/:id', parseForm, csrfProtection, async (req, res, next) => {
     responseJson.isHomePage = false;
     responseJson.searchText = '';
     responseJson.layout = 'layout-admin';
-    responseJson.csrfToken = req.csrfToken();
+
     res.render('edit-post', responseJson);
   } catch (e) {
     next(e);

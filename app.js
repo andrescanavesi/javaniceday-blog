@@ -31,7 +31,6 @@ const authOptions = {
   unauthorizedResponse: getUnauthorizedResponse,
 };
 
-
 const app = express();
 app.use(compression());
 app.use(useragent.express());

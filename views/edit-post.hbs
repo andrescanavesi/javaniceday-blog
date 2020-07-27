@@ -6,7 +6,6 @@ Updated at: {{post.updated_at_friendly_3}}
 
 <form class="mb-3" action="{{action}}" method="POST">
   <input type="hidden" name="_csrf" value="{{csrfToken}}">
-  {{csrfToken}}
   <div class="form-group">
     <input type="text" class="form-control" id="title" name="title" value="{{post.title}}" placeholder="Title">
   </div>
