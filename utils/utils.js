@@ -8,5 +8,6 @@ module.exports.dashString = function (string) {
     .toLowerCase()
     .replace('ñ', 'n')
     .replace(/[^\w ]+/g, '-')
-    .replace(/ +/g, '-');
+    .replace(/ +/g, '-')
+    .replace(/-{2,}/g, '-');
 };
