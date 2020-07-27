@@ -15,7 +15,6 @@ const sitemapRouter = require('./routes/sitemap');
 const logger = log4js.getLogger('app.js');
 logger.level = 'info';
 
-
 /**
  *
  * @returns {string} the text to be displayed when users hit on cancel prompt button
@@ -31,7 +30,6 @@ const authOptions = {
   authorizeAsync: false,
   unauthorizedResponse: getUnauthorizedResponse,
 };
-
 
 const app = express();
 app.use(compression());

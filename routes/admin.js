@@ -1,5 +1,7 @@
 const express = require('express');
 const log4js = require('log4js');
+const csrf = require('csurf');
+const bodyParser = require('body-parser');
 const daoPosts = require('../daos/dao_posts');
 const responseHelper = require('../utils/response_helper');
 
@@ -8,12 +10,19 @@ const router = express.Router();
 const logger = log4js.getLogger('routes/admin.js');
 logger.level = 'info';
 
+const csrfProtection = csrf({
+  cookie: true, signed: true, secure: true, httpOnly: true, sameSite: 'strict',
+});
+
+const parseForm = bodyParser.urlencoded({ extended: false });
+
 /**
  *  GET default admin page
  */
-router.get('/', async (req, res, next) => {
+router.get('/', csrfProtection, async (req, res, next) => {
   try {
     const responseJson = responseHelper.getResponseJson(req);
+    responseJson.csrfToken = req.csrfToken();
     const posts = await daoPosts.findAll(false, false);
 
     responseJson.posts = posts;
@@ -24,9 +33,10 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/create-post', async (req, res, next) => {
+router.get('/create-post', csrfProtection, async (req, res, next) => {
   try {
     const responseJson = responseHelper.getResponseJson(req);
+    responseJson.csrfToken = req.csrfToken();
 
     const defaultContent = `
 
@@ -67,7 +77,7 @@ router.get('/create-post', async (req, res, next) => {
 });
 
 
-router.post('/create-post', async (req, res, next) => {
+router.post('/create-post', parseForm, csrfProtection, async (req, res, next) => {
   try {
     const post = {
       title: req.body.title,
@@ -88,9 +98,14 @@ router.post('/create-post', async (req, res, next) => {
   }
 });
 
-router.get('/edit/:id', async (req, res, next) => {
+router.get('/edit/:id', csrfProtection, async (req, res, next) => {
   try {
     const responseJson = responseHelper.getResponseJson(req);
+    responseJson.csrfToken = req.csrfToken();
+    console.info('====');
+    console.info(responseJson.csrfToken);
+    console.info(JSON.stringify(csrfProtection, null, 2));
+    console.info('====');
     const post = await daoPosts.findById(req.params.id, true, false);
 
     responseJson.post = post;
@@ -102,11 +117,12 @@ router.get('/edit/:id', async (req, res, next) => {
   }
 });
 
-router.post('/edit/:id', async (req, res, next) => {
+router.post('/edit/:id', parseForm, csrfProtection, async (req, res, next) => {
   try {
     logger.info(`save post ${req.params.id} ${req.body.title}`);
 
     const responseJson = responseHelper.getResponseJson(req);
+    responseJson.csrfToken = req.csrfToken();
     let post = await daoPosts.findById(req.params.id, true, false);
     post.title = req.body.title;
     post.content = req.body.content;
@@ -123,6 +139,7 @@ router.post('/edit/:id', async (req, res, next) => {
     responseJson.isHomePage = false;
     responseJson.searchText = '';
     responseJson.layout = 'layout-admin';
+
     res.render('edit-post', responseJson);
   } catch (e) {
     next(e);
