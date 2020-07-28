@@ -28,3 +28,12 @@ body{
       column-count: 1 !important;
   }
 }
+
+pre {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.hljs{
+  background: #ffffff !important;
+}
