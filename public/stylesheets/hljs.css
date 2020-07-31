@@ -1,3 +1,5 @@
+/* custom hljs styles*/
+
 .hljs {
 	display: block;
 	overflow-x: auto;
@@ -59,7 +61,7 @@
 .hljs-built_in,
 .hljs-bullet,
 .hljs-code {
-	color: #397300
+	color: #de935f;
 }
 
 .hljs-meta {
