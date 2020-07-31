@@ -14,7 +14,7 @@ logger.level = 'info';
 router.get('/', async (req, res, next) => {
   try {
     const responseJson = responseHelper.getResponseJson(req);
-    const posts = await daoPosts.findAll();
+    const posts = await daoPosts.findAll(true, true);
 
     responseJson.posts = posts;
     responseJson.isHomePage = true;

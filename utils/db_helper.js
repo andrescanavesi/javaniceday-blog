@@ -36,7 +36,7 @@ const pool = new Pool({
  * @param {boolean} withCache true to cache the result
  * @return {Promise<*>}
  */
-module.exports.query = async function (theQuery, bindings, withCache) {
+module.exports.query = async function (theQuery, bindings = [], withCache = false) {
   if (withCache) {
     logger.info(`executing query with cache ${theQuery}`);
     const key = theQuery + JSON.stringify(bindings);
@@ -62,7 +62,7 @@ module.exports.query = async function (theQuery, bindings, withCache) {
 
       // delete all the cache content if we are inserting or updating data
       const auxQuery = theQuery.trim().toLowerCase();
-      if (auxQuery.startsWith('insert') || auxQuery.startsWith('update')) {
+      if (auxQuery.startsWith('insert') || auxQuery.startsWith('update') || auxQuery.startsWith('delete')) {
         queryCache.flushAll();
         queryCache.flushStats();
         logger.info(`the cache was flushed because of the query ${theQuery}`);

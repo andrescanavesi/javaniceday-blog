@@ -10,9 +10,20 @@ const router = express.Router();
 const logger = log4js.getLogger('routes/admin.js');
 logger.level = 'info';
 
-const csrfProtection = csrf({
-  cookie: true, signed: true, secure: true, httpOnly: true, sameSite: 'strict',
-});
+let csrfProtection;
+
+if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+  logger.info('dev');
+  // we are more flexible in development and testing
+  csrfProtection = csrf({
+    cookie: true,
+  });
+} else {
+  logger.info('non dev');
+  csrfProtection = csrf({
+    cookie: true, signed: true, secure: true, httpOnly: true, sameSite: 'strict',
+  });
+}
 
 const parseForm = bodyParser.urlencoded({ extended: false });
 

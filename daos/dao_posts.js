@@ -106,13 +106,13 @@ module.exports.update = async function (post) {
   await this.resetCache();
 };
 
-async function findWithLimit(limit, onlyActives = true) {
+async function findWithLimit(limit, onlyActives = true, witchCache = true) {
   logger.info(`findWithLimit, limit: ${limit}`);
   const condActives = onlyActives ? ' WHERE active=true ' : '';
   const query = `SELECT * FROM posts ${condActives} ORDER BY created_at DESC LIMIT $1 `;
   const bindings = [limit];
 
-  const result = await dbHelper.query(query, bindings, true);
+  const result = await dbHelper.query(query, bindings, witchCache);
   logger.info(`posts: ${result.rows.length}`);
   const posts = [];
   for (let i = 0; i < result.rows.length; i++) {
@@ -130,10 +130,10 @@ module.exports.resetCache = async function () {
 module.exports.findAll = async function (onlyActives = true, witchCache = true) {
   if (witchCache) {
     if (allPosts.length === 0) {
-      allPosts = findWithLimit(1000, onlyActives);
+      allPosts = findWithLimit(1000, onlyActives, witchCache);
     }
   } else {
-    allPosts = findWithLimit(1000, onlyActives);
+    allPosts = findWithLimit(1000, onlyActives, witchCache);
   }
   return allPosts;
 };
