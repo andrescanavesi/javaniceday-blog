@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",
     "express-favicon": "^2.0.1",
-    "express-useragent": "^1.0.13",
+    "express-useragent": "^1.0.15",
     "flexsearch": "^0.6.32",
     "hbs": "^4.1.1",
     "http-errors": "^1.7.3",
@@ -24,7 +24,7 @@
     "log4js": "^6.2.1",
     "moment": "^2.24.0",
     "morgan": "^1.10.0",
-    "node-cache": "^5.1.0",
+    "node-cache": "^5.1.2",
     "parse-database-url": "^0.3.0",
     "pg": "^7.18.2",
     "pretty": "^2.0.0"
@@ -32,13 +32,13 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "eslint": "^7.1.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-plugin-import": "^2.20.2",
-    "mocha": "^7.1.2",
+    "eslint": "^7.6.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "mocha": "^8.1.0",
     "mochawesome": "^6.1.1",
     "nodemon": "^2.0.3",
-    "nyc": "^15.0.1",
+    "nyc": "^15.1.0",
     "randomstring": "^1.1.5"
   }
 }
