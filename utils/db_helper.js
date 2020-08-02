@@ -1,6 +1,7 @@
 const parseDbUrl = require('parse-database-url');
 const { Pool } = require('pg');
 const NodeCache = require('node-cache');
+const crypto = require('crypto');
 
 const log4js = require('log4js');
 
@@ -39,13 +40,16 @@ const pool = new Pool({
 module.exports.query = async function (theQuery, bindings = [], withCache = false) {
   if (withCache) {
     logger.info(`executing query with cache ${theQuery}`);
-    const key = theQuery + JSON.stringify(bindings);
-    const value = queryCache.get(key);
+    const stringToHash = `${theQuery}${JSON.stringify(bindings)}`;
+    logger.info(`string to hash: ${stringToHash}`);
+    const hash = crypto.createHash('sha256').update(stringToHash).digest('hex');
+    logger.info(`hash: ${hash}`);
+    const value = queryCache.get(hash);
     if (value === undefined) {
       try {
-        logger.info('no cache for this query, will go to the DB');
+        logger.info('no cache for this query, let go to the DB');
         const queryResult = await pool.query(theQuery, bindings);
-        queryCache.set(key, queryResult);
+        queryCache.set(hash, queryResult);
         return queryResult;
       } catch (error) {
         throw new Error(`Error executing query with cache ${theQuery} error: ${error}`);

@@ -14,8 +14,6 @@ logger.level = 'info';
 const preset = 'fast';
 const searchIndex = new FlexSearch(preset);
 
-let allPosts = [];
-
 /**
  *
  * @param {*} row
@@ -106,7 +104,13 @@ module.exports.update = async function (post) {
   await this.resetCache();
 };
 
-async function findWithLimit(limit, onlyActives = true, witchCache = true) {
+/**
+ *
+ * @param {number} limit
+ * @param {boolean} onlyActives
+ * @param {boolean} witchCache
+ */
+async function findWithLimit(limit = 100, onlyActives = true, witchCache = true) {
   logger.info(`findWithLimit, limit: ${limit}`);
   const condActives = onlyActives ? ' WHERE active=true ' : '';
   const query = `SELECT * FROM posts ${condActives} ORDER BY created_at DESC LIMIT $1 `;
@@ -122,20 +126,12 @@ async function findWithLimit(limit, onlyActives = true, witchCache = true) {
 }
 
 module.exports.resetCache = async function () {
-  allPosts = [];
   await this.buildSearchIndex();
 };
 
 
-module.exports.findAll = async function (onlyActives = true, witchCache = true) {
-  if (witchCache) {
-    if (allPosts.length === 0) {
-      allPosts = findWithLimit(1000, onlyActives, witchCache);
-    }
-  } else {
-    allPosts = findWithLimit(1000, onlyActives, witchCache);
-  }
-  return allPosts;
+module.exports.findAll = function (onlyActives = true, witchCache = true) {
+  return findWithLimit(1000, onlyActives, witchCache);
 };
 
 /**
