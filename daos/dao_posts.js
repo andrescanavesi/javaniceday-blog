@@ -265,7 +265,7 @@ module.exports.findRelated = async function (text) {
     await this.buildSearchIndex();
   }
 
-  const limit = 6;
+  const limit = 8;
   const resultIds = await searchIndex.search({
     query: text,
     limit,
@@ -282,7 +282,15 @@ module.exports.findRelated = async function (text) {
   if (results.length < limitHalf) {
     logger.info('not enought related posts, result will filled up with more posts');
     const morePosts = await findWithLimit(limitHalf);
-    results = results.concat(morePosts);
+    morePosts.forEach((post) => {
+      let exists = false;
+      results.forEach((postResults) => {
+        if (post.id === postResults.id) {
+          exists = true;
+        }
+      });
+      if (!exists && results.length < limit) results.push(post);
+    });
   }
 
   return results;
