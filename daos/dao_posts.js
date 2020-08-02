@@ -129,7 +129,6 @@ module.exports.resetCache = async function () {
   await this.buildSearchIndex();
 };
 
-
 module.exports.findAll = function (onlyActives = true, witchCache = true) {
   return findWithLimit(1000, onlyActives, witchCache);
 };
@@ -158,7 +157,6 @@ module.exports.findById = async function (id, ignoreActive, witchCache = true) {
   if (result.rows.length > 0) {
     const post = convertPost(result.rows[0]);
 
-
     return post;
   }
   throw Error(`post not found by id ${id}`);
@@ -175,14 +173,12 @@ module.exports.findByTitleSeo = async function (titleSeo, witchCache = true) {
   }
   const query = 'SELECT * FROM posts WHERE active=true AND title_seo = $1 LIMIT 1';
 
-
   const bindings = [titleSeo];
   // log.info(sqlFormatter.format(query));
   logger.info(`findByTitleSeo, bindings: ${bindings}`);
   const result = await dbHelper.query(query, bindings, witchCache);
   if (result.rows.length > 0) {
     const post = convertPost(result.rows[0]);
-
 
     return post;
   }
@@ -265,7 +261,7 @@ module.exports.findRelated = async function (text) {
     await this.buildSearchIndex();
   }
 
-  const limit = 8;
+  const limit = 12;
   const resultIds = await searchIndex.search({
     query: text,
     limit,
