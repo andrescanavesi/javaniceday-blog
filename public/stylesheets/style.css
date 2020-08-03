@@ -2,6 +2,13 @@ body{
   padding-top: 0px;
 }
 
+code{
+  padding: .1em 1em;
+  color: rgb(29, 31, 33);
+  background-color: #F0F0F0;
+  font-style: italic;
+}
+
 #blog-header{
   background: url('https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,e_brightness:-62,w_1400/v1592504956/javaniceday.com/kevin-ku-w7zyugynprq-unsplash.jpg') no-repeat center;
   background-size: cover;
