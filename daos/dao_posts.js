@@ -254,8 +254,9 @@ module.exports.buildSearchIndex = async function () {
 
 /**
    * @param {string} text to search
+   * @param {number} excludeId optinal exclude the given post id
    */
-module.exports.findRelated = async function (text) {
+module.exports.findRelated = async function (text, excludeId = null) {
   logger.info(`look for related results with: ${text}`);
   if (searchIndex.length === 0) {
     await this.buildSearchIndex();
@@ -289,7 +290,7 @@ module.exports.findRelated = async function (text) {
     });
   }
 
-  return results;
+  return results.filter((post) => post.id !== excludeId);
 };
 
 module.exports.deleteDummyData = async function () {
