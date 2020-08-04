@@ -255,6 +255,7 @@ module.exports.buildSearchIndex = async function () {
 /**
    * @param {string} text to search
    * @param {number} excludeId optinal exclude the given post id
+   * @returns {[]} array of posts
    */
 module.exports.findRelated = async function (text, excludeId = null) {
   logger.info(`look for related results with: ${text}`);
@@ -262,7 +263,7 @@ module.exports.findRelated = async function (text, excludeId = null) {
     await this.buildSearchIndex();
   }
 
-  const limit = 12;
+  const limit = 16;
   const resultIds = await searchIndex.search({
     query: text,
     limit,
@@ -273,6 +274,7 @@ module.exports.findRelated = async function (text, excludeId = null) {
   let results = [];
   if (resultIds.length > 0) {
     results = await this.findByIds(resultIds);
+    results = results.filter((post) => post.id !== excludeId);
   }
 
   const limitHalf = Math.round(limit / 2);
@@ -282,7 +284,7 @@ module.exports.findRelated = async function (text, excludeId = null) {
     morePosts.forEach((post) => {
       let exists = false;
       results.forEach((postResults) => {
-        if (post.id === postResults.id) {
+        if (post.id === postResults.id || post.id === excludeId) {
           exists = true;
         }
       });
@@ -290,7 +292,7 @@ module.exports.findRelated = async function (text, excludeId = null) {
     });
   }
 
-  return results.filter((post) => post.id !== excludeId);
+  return results;
 };
 
 module.exports.deleteDummyData = async function () {
