@@ -48,7 +48,11 @@ router.get('/post/:titleSeo', async (req, res, next) => {
 
     res.render('post', responseJson);
   } catch (e) {
-    next(e);
+    // next(e);
+    logger.error(e);
+
+    // to avoid SEO penalization. IN the future throw  404 (see Boom package in npm)
+    res.redirect(process.env.JND_BASE_URL);
   }
 });
 
