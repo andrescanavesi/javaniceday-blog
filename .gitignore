@@ -105,3 +105,4 @@ dist
 
 # mochawesome tests results
 test_results/
+etc/tmp.js
