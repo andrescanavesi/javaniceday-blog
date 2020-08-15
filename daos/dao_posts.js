@@ -19,7 +19,7 @@ const searchIndex = new FlexSearch(preset);
  * @param {*} row
  */
 function convertPost(row) {
-  const baseImagesUrl = 'https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,w_900/v1590442770/javaniceday.com/';
+  const baseImagesUrl = 'https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,f_auto,q_60,w_900/v1590442770/javaniceday.com/';
   const result = {
     id: row.id,
     title: row.title,
