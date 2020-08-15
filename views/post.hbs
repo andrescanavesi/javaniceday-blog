@@ -36,7 +36,7 @@
  <hr>
 
  <!-- Preview Image -->
- <img class="img-fluid rounded" src="{{post.featured_image_url}}" alt="Featured image">
+ <img class="lozad img-fluid rounded" data-src="{{post.featured_image_url}}" alt="featured image">
 
  <hr>
 
@@ -59,7 +59,7 @@
     <div class="card-columns">
       {{#each relatedPosts}}
         <div class="card">
-          <img class="card-img-top" src="{{this.featured_image_url}}" alt="Post image cap">
+          <img class="lozad card-img-top" data-src="{{this.featured_image_url}}" alt="image post">
           <div class="card-body">
             <a href="/post/{{this.title_seo}}">
               {{this.title}}
