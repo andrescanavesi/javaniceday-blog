@@ -53,10 +53,10 @@
 
     
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link id="bootstrapCss" as="style" rel="preload" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/stylesheets/hljs.css' />
+    <link id="stylesCss" as="style" rel='preload' href='/stylesheets/style.css' />
+    <link id="hljsCss" as="style" rel='preload' href='/stylesheets/hljs.css' />
 
 </head>
 
@@ -206,11 +206,16 @@
 
     <script type="text/javascript">
       document.addEventListener("DOMContentLoaded", function(event) { 
+
+        //load css styles after the page loaded
+        document.getElementById('bootstrapCss').rel='stylesheet'
+        document.getElementById('hljsCss').rel='stylesheet'
+        document.getElementById('stylesCss').rel='stylesheet'
+
           // to load images in a lazy way
           // lazy loads elements with default selector as '.lozad'
           const observer = lozad();
           observer.observe();
-          console.info('lozad loaded');
       });
 </script>
 
