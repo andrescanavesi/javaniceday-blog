@@ -38,7 +38,6 @@ module.exports.getResponseJson = function (req) {
   responseJson.pageLogo = 'http://...'; // TODO
   responseJson.pageDescription = responseJson.description;
 
-
   responseJson.siteName = 'javaniceday.com';
   responseJson.author = 'Andres Canavesi';
   responseJson.publisher = 'Andres Canavesi';
@@ -51,6 +50,8 @@ module.exports.getResponseJson = function (req) {
   responseJson.isPostPage = false;
 
   responseJson.isAuthenticated = req.headers.authorization && req.headers.authorization.startsWith('Basic ');
+
+  responseJson.defaultLoadingImage = process.env.JND_DEFAULT_LOADING_IMAGE;
 
   return responseJson;
 };

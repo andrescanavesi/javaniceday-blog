@@ -19,6 +19,23 @@ router.get('/', async (req, res, next) => {
     responseJson.posts = posts;
     responseJson.isHomePage = true;
     responseJson.searchText = '';
+    responseJson.defaultLoadingImage = 'https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,f_auto,q_50,w_900/v1597923257/javaniceday.com/default-image.jpg';
+    res.render('index', responseJson);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get('/search', async (req, res, next) => {
+  try {
+    const textToSearch = req.query.q;
+    logger.info(`search ${textToSearch}`);
+    const responseJson = responseHelper.getResponseJson(req);
+    const posts = await daoPosts.findRelated(textToSearch);
+
+    responseJson.posts = posts;
+    responseJson.isHomePage = true;
+    responseJson.searchText = textToSearch;
     res.render('index', responseJson);
   } catch (e) {
     next(e);

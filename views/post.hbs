@@ -36,7 +36,9 @@
  <hr>
 
  <!-- Preview Image -->
- <img class="lozad img-fluid rounded" data-src="{{post.featured_image_url}}" alt="featured image">
+ <img class="lozad img-fluid rounded" 
+ src="{{post.default_loading_image}}"
+ data-src="{{post.featured_image_url}}" alt="featured image">
 
  <hr>
 
@@ -59,12 +61,13 @@
     <div class="card-columns">
       {{#each relatedPosts}}
         <div class="card">
-          <img class="lozad card-img-top" data-src="{{this.featured_image_url}}" alt="image post">
+          <img class="lozad card-img-top" 
+          src="{{this.default_thumb_loading_image}}"
+          data-src="{{this.thumb_image_url}}" alt="image post">
           <div class="card-body">
             <a href="/post/{{this.title_seo}}">
               {{this.title}}
             </a>
-            
             <p class="card-text">
               <small class="text-muted">Posted on {{this.created_at_friendly}}</small>
             </p>

@@ -19,7 +19,8 @@ const searchIndex = new FlexSearch(preset);
  * @param {*} row
  */
 function convertPost(row) {
-  const baseImagesUrl = 'https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,f_auto,q_60,w_900/v1590442770/javaniceday.com/';
+  const baseImagesUrl = process.env.JND_BASE_IMAGE_URL;
+  const baseThumbImagesUrl = process.env.JND_BASE_THUMB_IMAGE_URL;
   const result = {
     id: row.id,
     title: row.title,
@@ -37,10 +38,13 @@ function convertPost(row) {
     active: row.active,
     featured_image_name: row.featured_image_name,
     featured_image_url: baseImagesUrl + row.featured_image_name,
+    thumb_image_url: baseThumbImagesUrl + row.featured_image_name,
     tags: row.tags,
     tags_array: row.tags.split(','),
     url: `${process.env.JND_BASE_URL}post/${row.title_seo}`,
     url_edit: `${process.env.JND_BASE_URL}admin/edit/${row.id}`,
+    default_loading_image: process.env.JND_DEFAULT_LOADING_IMAGE,
+    default_thumb_loading_image: process.env.JND_DEFAULT_THUMB_LOADING_IMAGE,
   };
 
   return result;

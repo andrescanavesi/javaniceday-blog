@@ -4,7 +4,9 @@
   {{#each posts}}
     <!-- Blog Post -->
     <div class="card mb-4">
-          <img class="lozad card-img-top" data-src="{{this.featured_image_url}}" alt="image post">
+          <img class="lozad card-img-top" 
+          src="{{this.default_loading_image}}"
+          data-src="{{this.featured_image_url}}" alt="image post">
           <div class="card-body">
             <h2 class="card-title">{{this.title}}</h2>
             <p class="card-text">{{this.summary}}</p>
