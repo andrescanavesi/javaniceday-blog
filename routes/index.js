@@ -97,6 +97,18 @@ router.get('/:year/:month/:day/:name', async (req, res, next) => {
   }
 });
 
+// backward compatibility to old urls such as
+// https://www.javaniceday.com/2018/06/07/get-visualforce-usage-stats-from-visualforceaccessmetrics/amp/
+router.get('/:year/:month/:day/:name/:amp', async (req, res, next) => {
+  try {
+    // redirect old posts from the old blog
+    const page = `/post/${req.params.name}`;
+    res.redirect(page);
+  } catch (e) {
+    next(e);
+  }
+});
+
 router.get('/category/:tag', async (req, res, next) => {
   try {
     // redirect old categories from the old blog
