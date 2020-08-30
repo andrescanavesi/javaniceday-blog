@@ -4,6 +4,7 @@ const csrf = require('csurf');
 const bodyParser = require('body-parser');
 const daoPosts = require('../daos/dao_posts');
 const responseHelper = require('../utils/response_helper');
+const controllerSearchTerms = require('../controllers/controller_search_terms');
 
 const router = express.Router();
 
@@ -87,7 +88,6 @@ router.get('/create-post', csrfProtection, async (req, res, next) => {
   }
 });
 
-
 router.post('/create-post', parseForm, csrfProtection, async (req, res, next) => {
   try {
     const post = {
@@ -113,10 +113,6 @@ router.get('/edit/:id', csrfProtection, async (req, res, next) => {
   try {
     const responseJson = responseHelper.getResponseJson(req);
     responseJson.csrfToken = req.csrfToken();
-    console.info('====');
-    console.info(responseJson.csrfToken);
-    console.info(JSON.stringify(csrfProtection, null, 2));
-    console.info('====');
     const post = await daoPosts.findById(req.params.id, true, false);
 
     responseJson.post = post;
@@ -152,6 +148,37 @@ router.post('/edit/:id', parseForm, csrfProtection, async (req, res, next) => {
     responseJson.layout = 'layout-admin';
 
     res.render('edit-post', responseJson);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get('/process-seo-list', csrfProtection, async (req, res, next) => {
+  try {
+    const responseJson = responseHelper.getResponseJson(req);
+    responseJson.csrfToken = req.csrfToken();
+
+    responseJson.action = '/admin/process-seo-list';
+    responseJson.layout = 'layout-admin';
+    responseJson.csv = '';
+    res.render('process-seo-list', responseJson);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.post('/process-seo-list', parseForm, csrfProtection, async (req, res, next) => {
+  try {
+    const responseJson = responseHelper.getResponseJson(req);
+    responseJson.csrfToken = req.csrfToken();
+    responseJson.action = '/admin/process-seo-list';
+    responseJson.layout = 'layout-admin';
+    responseJson.csv = '';
+
+    const { csv } = req.body;
+    await controllerSearchTerms.processCsv(csv);
+    // res.redirect('/admin/process-seo-list');
+    res.render('process-seo-list', responseJson);
   } catch (e) {
     next(e);
   }

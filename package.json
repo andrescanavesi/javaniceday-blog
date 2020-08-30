@@ -5,13 +5,16 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "NODE_ENV=development nodemon ./bin/www",
-    "test": "NODE_ENV=test nyc --check-coverage --lines 10 --per-file --reporter=html mocha tests/test_*.js --recursive --reporter mochawesome --reporter-options reportDir=./test_results --exit"
+    "test": "NODE_ENV=test nyc --check-coverage --lines 10 --per-file --reporter=html mocha tests/test_*.js --recursive --reporter mochawesome --reporter-options reportDir=./test_results --exit",
+    "test:controller_search_terms": "NODE_ENV=development nyc --check-coverage --lines 10 --per-file --reporter=html mocha tests/test_controller_search_terms.js --recursive --reporter mochawesome --reporter-options reportDir=./test_results --exit",
+    "test:web": "NODE_ENV=development nyc --check-coverage --lines 10 --per-file --reporter=html mocha tests/test_web.js --recursive --reporter mochawesome --reporter-options reportDir=./test_results --exit"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.4",
     "csurf": "^1.11.0",
+    "csv-string": "^4.0.1",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",

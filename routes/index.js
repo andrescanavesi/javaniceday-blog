@@ -1,6 +1,7 @@
 const express = require('express');
 const log4js = require('log4js');
 const daoPosts = require('../daos/dao_posts');
+const daoSearchTerms = require('../daos/dao_search_terms');
 const responseHelper = require('../utils/response_helper');
 
 const router = express.Router();
@@ -13,14 +14,20 @@ logger.level = 'info';
  */
 router.get('/', async (req, res, next) => {
   try {
-    const responseJson = responseHelper.getResponseJson(req);
-    const posts = await daoPosts.findAll(true, true);
+    if (req.query.s && req.query.s.length > 0) {
+      // Chrome uses /?s=something to search in hour site so redirect to our search page
+      const page = `/search?q=${req.query.s}`;
+      res.redirect(page);
+    } else {
+      const responseJson = responseHelper.getResponseJson(req);
+      const posts = await daoPosts.findAll(true, true);
 
-    responseJson.posts = posts;
-    responseJson.isHomePage = true;
-    responseJson.searchText = '';
-    responseJson.defaultLoadingImage = 'https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,f_auto,q_50,w_900/v1597923257/javaniceday.com/default-image.jpg';
-    res.render('index', responseJson);
+      responseJson.posts = posts;
+      responseJson.isHomePage = true;
+      responseJson.searchText = '';
+      responseJson.defaultLoadingImage = 'https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,f_auto,q_50,w_900/v1597923257/javaniceday.com/default-image.jpg';
+      res.render('index', responseJson);
+    }
   } catch (e) {
     next(e);
   }
@@ -125,6 +132,28 @@ router.get('/ads.txt', (req, res, next) => {
     res.set('Content-Type', 'text/plain');
     res.status(200);
     res.send(content);
+  } catch (e) {
+    next(e);
+  }
+});
+/**
+ * SEO list of posts
+ */
+router.get('/l/:termSeo', async (req, res, next) => {
+  try {
+    const { termSeo } = req.params;
+    const responseJson = responseHelper.getResponseJson(req);
+    const searchTerm = await daoSearchTerms.findByTerm(termSeo, false, true, true);
+
+    const term = searchTerm ? searchTerm.term : termSeo.split('_').join(' ');
+
+    const posts = await daoPosts.findRelated(term);
+
+    responseJson.posts = posts;
+    responseJson.isHomePage = false;
+    responseJson.searchText = term;
+    responseJson.title = `${term}`;
+    res.render('seo-list', responseJson);
   } catch (e) {
     next(e);
   }

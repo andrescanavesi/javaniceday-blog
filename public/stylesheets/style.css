@@ -12,6 +12,10 @@ code{
   font-style: italic;
 }
 
+h3{
+  font-weight: 600;
+}
+
 #blog-header{
   background: url('https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,f_auto,q_60,e_brightness:-62,w_1400/v1592504956/javaniceday.com/kevin-ku-w7zyugynprq-unsplash.jpg') no-repeat center;
   background-size: cover;
@@ -37,4 +41,12 @@ code{
   .card-columns {
       column-count: 1 !important;
   }
+}
+
+.seo-list-img{
+  width: 150px;
+}
+
+.font-size-1-1 {
+  font-size: 1.1rem;
 }

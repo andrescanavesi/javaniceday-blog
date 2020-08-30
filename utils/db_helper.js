@@ -50,6 +50,7 @@ module.exports.query = async function (theQuery, bindings = [], withCache = fals
         logger.info('no cache for this query, let go to the DB');
         const queryResult = await pool.query(theQuery, bindings);
         queryCache.set(hash, queryResult);
+        logger.info(`cache set for ${hash}`);
         return queryResult;
       } catch (error) {
         throw new Error(`Error executing query with cache ${theQuery} error: ${error}`);
@@ -69,7 +70,7 @@ module.exports.query = async function (theQuery, bindings = [], withCache = fals
       if (auxQuery.startsWith('insert') || auxQuery.startsWith('update') || auxQuery.startsWith('delete')) {
         queryCache.flushAll();
         queryCache.flushStats();
-        logger.info(`the cache was flushed because of the query ${theQuery}`);
+        // logger.info(`the cache was flushed because of the query ${theQuery}`);
       }
       return result;
     } catch (error) {
