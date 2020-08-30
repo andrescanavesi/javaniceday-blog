@@ -12,6 +12,7 @@
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.4",
     "csurf": "^1.11.0",
+    "csv-string": "^4.0.1",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",

@@ -13,14 +13,20 @@ logger.level = 'info';
  */
 router.get('/', async (req, res, next) => {
   try {
-    const responseJson = responseHelper.getResponseJson(req);
-    const posts = await daoPosts.findAll(true, true);
+    if (req.query.s && req.query.s.length > 0) {
+      // Chrome uses /?s=something to search in hour site so redirect to our search page
+      const page = `/search?q=${req.query.s}`;
+      res.redirect(page);
+    } else {
+      const responseJson = responseHelper.getResponseJson(req);
+      const posts = await daoPosts.findAll(true, true);
 
-    responseJson.posts = posts;
-    responseJson.isHomePage = true;
-    responseJson.searchText = '';
-    responseJson.defaultLoadingImage = 'https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,f_auto,q_50,w_900/v1597923257/javaniceday.com/default-image.jpg';
-    res.render('index', responseJson);
+      responseJson.posts = posts;
+      responseJson.isHomePage = true;
+      responseJson.searchText = '';
+      responseJson.defaultLoadingImage = 'https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,f_auto,q_50,w_900/v1597923257/javaniceday.com/default-image.jpg';
+      res.render('index', responseJson);
+    }
   } catch (e) {
     next(e);
   }
