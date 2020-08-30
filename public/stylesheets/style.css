@@ -1,5 +1,8 @@
 body{
   padding-top: 0px;
+  font-family: 'Gotham Light', 'Montserrat' !important;
+  font-size: 1.3rem;
+  font-weight: 500;
 }
 
 code{

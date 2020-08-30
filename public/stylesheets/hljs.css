@@ -4,7 +4,8 @@
 	display: block;
 	overflow-x: auto;
 	padding: .5em;
-	background: #1d1f21
+	background: #1d1f21;
+	font-size: 1rem;
 }
 
 .hljs,
