@@ -141,8 +141,6 @@ router.get('/ads.txt', (req, res, next) => {
  */
 router.get('/l/:termSeo', async (req, res, next) => {
   try {
-    // TODO we have to add these pages to the sitemap.xml
-
     const { termSeo } = req.params;
     const responseJson = responseHelper.getResponseJson(req);
     const searchTerm = await daoSearchTerms.findByTerm(termSeo, false, true, true);

@@ -1,0 +1,11 @@
+
+<form class="my-5" action="{{action}}" method="POST">
+  <input type="hidden" name="_csrf" value="{{csrfToken}}">
+  
+  <div class="form-group">  
+    <textarea class="form-control" id="csv" name="csv" rows="15" 
+    placeholder="Csv", spellcheck="true">{{csv}}</textarea>
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Process</button>
+</form>

@@ -20,12 +20,18 @@ async function processRow(row) {
 
 module.exports.processCsv = async function (csvContent) {
   logger.info('[processCsv]');
+  if (!csvContent) throw new Error('empty csv content');
   let arr = csvString.parse(csvContent);
   arr = arr.splice(1, arr.length); // remove the first element that contains the header
   // eslint-disable-next-line no-restricted-syntax
   for (const item of arr) {
     // do this way instead of in parallel to detect error easier
-    // eslint-disable-next-line no-await-in-loop
-    await processRow(item);
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      await processRow(item);
+    } catch (err) {
+      // do not stop tje import for a specific error
+      logger.error(err);
+    }
   }
 };

@@ -70,7 +70,7 @@ module.exports.query = async function (theQuery, bindings = [], withCache = fals
       if (auxQuery.startsWith('insert') || auxQuery.startsWith('update') || auxQuery.startsWith('delete')) {
         queryCache.flushAll();
         queryCache.flushStats();
-        logger.info(`the cache was flushed because of the query ${theQuery}`);
+        // logger.info(`the cache was flushed because of the query ${theQuery}`);
       }
       return result;
     } catch (error) {
