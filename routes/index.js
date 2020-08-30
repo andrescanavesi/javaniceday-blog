@@ -25,6 +25,7 @@ router.get('/', async (req, res, next) => {
       responseJson.posts = posts;
       responseJson.isHomePage = true;
       responseJson.searchText = '';
+      // eslint-disable-next-line max-len
       responseJson.defaultLoadingImage = 'https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,f_auto,q_50,w_900/v1597923257/javaniceday.com/default-image.jpg';
       res.render('index', responseJson);
     }
@@ -43,6 +44,8 @@ router.get('/search', async (req, res, next) => {
     responseJson.posts = posts;
     responseJson.isHomePage = true;
     responseJson.searchText = textToSearch;
+    responseJson.title = textToSearch;
+    responseJson.description = textToSearch;
     res.render('index', responseJson);
   } catch (e) {
     next(e);
@@ -75,7 +78,7 @@ router.get('/post/:titleSeo', async (req, res, next) => {
     // next(e);
     logger.error(e);
 
-    // to avoid SEO penalization. IN the future throw  404 (see Boom package in npm)
+    // to avoid SEO penalization. In the future throw  404 (see Boom package in npm)
     res.redirect(process.env.JND_BASE_URL);
   }
 });
@@ -87,6 +90,7 @@ router.get('/tag/:tag', async (req, res, next) => {
     const responseJson = responseHelper.getResponseJson(req);
     responseJson.posts = data;
     responseJson.title = `${req.params.tag} - javaniceday.com`;
+    responseJson.description = responseJson.title;
     responseJson.pageHeader = req.params.tag;
     res.render('index', responseJson);
   } catch (e) {
@@ -153,6 +157,7 @@ router.get('/l/:termSeo', async (req, res, next) => {
     responseJson.isHomePage = false;
     responseJson.searchText = term;
     responseJson.title = `${term}`;
+    responseJson.description = responseJson.title;
     res.render('seo-list', responseJson);
   } catch (e) {
     next(e);
