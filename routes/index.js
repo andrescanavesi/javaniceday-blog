@@ -1,6 +1,7 @@
 const express = require('express');
 const log4js = require('log4js');
 const daoPosts = require('../daos/dao_posts');
+const daoSearchTerms = require('../daos/dao_search_terms');
 const responseHelper = require('../utils/response_helper');
 
 const router = express.Router();
@@ -131,6 +132,30 @@ router.get('/ads.txt', (req, res, next) => {
     res.set('Content-Type', 'text/plain');
     res.status(200);
     res.send(content);
+  } catch (e) {
+    next(e);
+  }
+});
+/**
+ * SEO list of posts
+ */
+router.get('/l/:termSeo', async (req, res, next) => {
+  try {
+    // TODO we have to add these pages to the sitemap.xml
+
+    const { termSeo } = req.params;
+    const responseJson = responseHelper.getResponseJson(req);
+    const searchTerm = await daoSearchTerms.findByTerm(termSeo, false, true, true);
+
+    const term = searchTerm ? searchTerm.term : termSeo.split('_').join(' ');
+
+    const posts = await daoPosts.findRelated(term);
+
+    responseJson.posts = posts;
+    responseJson.isHomePage = false;
+    responseJson.searchText = term;
+    responseJson.title = `${term}`;
+    res.render('seo-list', responseJson);
   } catch (e) {
     next(e);
   }

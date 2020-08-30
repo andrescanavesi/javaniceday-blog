@@ -4,12 +4,10 @@ const randomstring = require('randomstring');
 const log4js = require('log4js');
 const app = require('../app');
 
-
 const logger = log4js.getLogger('tests/test_web.js');
 
 const { assert } = chai;
 const { expect } = chai;
-
 
 // Configure chai
 chai.use(chaiHttp);
@@ -39,9 +37,19 @@ describe('Test Web', function () {
       });
   });
 
-  it.skip('should search', (done) => {
+  it('should search', (done) => {
     chai.request(app)
       .get('/search?q=nodejs')
+      .end((err, res) => {
+        assertNotError(err, res);
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('should get seo list page', (done) => {
+    chai.request(app)
+      .get('/l/how-to-build-a-sitemap')
       .end((err, res) => {
         assertNotError(err, res);
         expect(res).to.have.status(200);
@@ -59,18 +67,17 @@ describe('Test Web', function () {
       });
   });
 
-
-  // it('should display sitemap.xml', (done) => {
-  //   chai.request(app)
-  //     .get('/sitemap.xml')
-  //     .end((err, res) => {
-  //       assertNotError(err, res);
-  //       expect(res).to.have.status(200);
-  //       expect(res).to.have.headers;
-  //       expect(res).to.be.all; // TODO validate xml
-  //       done();
-  //     });
-  // });
+  it('should display sitemap.xml', (done) => {
+    chai.request(app)
+      .get('/sitemap.xml')
+      .end((err, res) => {
+        assertNotError(err, res);
+        expect(res).to.have.status(200);
+        // expect(res).to.have.headers;
+        // expect(res).to.be.all; // TODO validate xml
+        done();
+      });
+  });
 
   // it('should display robots.txt', (done) => {
   //   chai.request(app)

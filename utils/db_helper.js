@@ -50,6 +50,7 @@ module.exports.query = async function (theQuery, bindings = [], withCache = fals
         logger.info('no cache for this query, let go to the DB');
         const queryResult = await pool.query(theQuery, bindings);
         queryCache.set(hash, queryResult);
+        logger.info(`cache set for ${hash}`);
         return queryResult;
       } catch (error) {
         throw new Error(`Error executing query with cache ${theQuery} error: ${error}`);

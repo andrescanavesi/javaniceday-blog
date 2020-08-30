@@ -4,6 +4,7 @@ const router = express.Router();
 const js2xmlparser = require('js2xmlparser');
 const moment = require('moment');
 const daoPosts = require('../daos/dao_posts');
+const daoSearchTerms = require('../daos/dao_search_terms');
 
 /**
  * It generates an standard sitemal.xml for SEO purposes
@@ -36,6 +37,21 @@ router.get('/', async (req, res, next) => {
       url['image:image'] = {
         'image:loc': posts[i].featured_image_url,
         'image:caption': posts[i].title,
+      };
+
+      collection.push(url);
+    }
+
+    // add search terms
+    const searchTerms = await daoSearchTerms.findAll(false, false);
+    for (let i = 0; i < searchTerms.length; i++) {
+      const url = {};
+      url.loc = searchTerms[i].url;
+      url.lastmod = searchTerms[i].updated_at_friendly_2;
+      url.changefreq = 'weekly';
+      url['image:image'] = {
+        'image:loc': searchTerms[i].featured_image_url,
+        'image:caption': searchTerms[i].term,
       };
 
       collection.push(url);
