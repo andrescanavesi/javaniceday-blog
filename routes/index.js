@@ -164,4 +164,66 @@ router.get('/l/:termSeo', async (req, res, next) => {
   }
 });
 
+/**
+ * All tags, posts and search terms list
+ */
+router.get('/all/:kind', async (req, res, next) => {
+  try {
+    const { kind } = req.params;
+    const responseJson = responseHelper.getResponseJson(req);
+    const links = [];
+    let title = '';
+    let description = '';
+    let records;
+    switch (kind) {
+      case 'tags':
+        title = 'All tags';
+        description = 'All tags';
+        records = await daoPosts.findAllTags(true);
+        records.forEach((item) => {
+          links.push({
+            url: item.url,
+            name: item.name,
+            featured_image_url: item.featured_image_url,
+          });
+        });
+        break;
+      case 'search':
+        title = 'All search terms';
+        description = 'All search terms';
+        records = await daoSearchTerms.findAll(false, true);
+        records.forEach((item) => {
+          links.push({
+            url: item.url,
+            name: item.term,
+            featured_image_url: item.featured_image_url,
+          });
+        });
+        break;
+      case 'posts':
+        title = 'All posts';
+        description = 'All posts';
+        records = await daoPosts.findAll(true, true);
+        records.forEach((item) => {
+          links.push({
+            url: item.url,
+            name: item.title,
+            featured_image_url: item.thumb_image_url,
+          });
+        });
+        break;
+      default: throw new Error('Unsupported kind');
+    }
+
+    responseJson.links = links;
+    responseJson.isHomePage = false;
+    responseJson.searchText = '';
+    responseJson.title = title;
+    responseJson.description = description;
+    res.render('link-list', responseJson);
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;

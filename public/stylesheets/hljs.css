@@ -5,7 +5,6 @@
 	overflow-x: auto;
 	padding: .5em;
 	background: #1d1f21;
-	font-size: 1rem;
 }
 
 .hljs,
@@ -23,7 +22,7 @@
 .hljs-meta-keyword,
 .hljs-name,
 .hljs-selector-tag {
-    font-weight: 700;
+    font-weight: 100;
     color: #81a2be;
 }
 
@@ -41,7 +40,7 @@
 .hljs-section,
 .hljs-title {
 	color: #99cc99;
-	font-weight: 700
+	font-weight: 100
 }
 
 .hljs-link,
@@ -78,5 +77,5 @@
 }
 
 .hljs-strong {
-	font-weight: 700
+	font-weight: 500
 }

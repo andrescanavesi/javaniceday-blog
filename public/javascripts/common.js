@@ -14,3 +14,8 @@ function search(event, element) {
     }
   }
 }
+
+function toggleNavbar() {
+  const element = document.getElementById('navbarSupportedContent');
+  element.classList.toggle('show');
+}

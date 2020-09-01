@@ -137,6 +137,35 @@ module.exports.findAll = function (onlyActives = true, witchCache = true) {
   return findWithLimit(1000, onlyActives, witchCache);
 };
 
+module.exports.findAllTags = async function (witchCache = true) {
+  // to get all tags we have to get all active posts, iterate them and extract the tags
+  const allPosts = await this.findAll(true, witchCache);
+  const tags = [];
+  // eslint-disable-next-line no-restricted-syntax
+  for (const post of allPosts) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const tag of post.tags_array) {
+      if (!tags.includes(tag.toLowerCase())) {
+        tags.push(tag.toLowerCase());
+      }
+    }
+  }
+  const objects = [];
+  const today = moment().format('YYYY-MM-DD');
+  // eslint-disable-next-line no-restricted-syntax
+  for (const tag of tags) {
+    const obj = {
+      name: tag,
+      url: `${process.env.JND_BASE_URL}tag/${tag}`,
+      updated_at_friendly: today,
+      featured_image_url: `${process.env.JND_DEFAULT_IMAGE_URL}`,
+    };
+    objects.push(obj);
+  }
+
+  return objects;
+};
+
 /**
  *
  * @param {number} id

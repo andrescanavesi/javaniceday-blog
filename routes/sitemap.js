@@ -57,6 +57,21 @@ router.get('/', async (req, res, next) => {
       collection.push(url);
     }
 
+    // add all tags
+    const tags = await daoPosts.findAllTags(true);
+    for (let i = 0; i < tags.length; i++) {
+      const url = {};
+      url.loc = tags[i].url;
+      url.lastmod = tags[i].updated_at_friendly;
+      url.changefreq = 'weekly';
+      url['image:image'] = {
+        'image:loc': tags[i].featured_image_url,
+        'image:caption': tags[i].name,
+      };
+
+      collection.push(url);
+    }
+
     const col = {
       '@': {
         xmlns: 'http://www.sitemaps.org/schemas/sitemap/0.9',

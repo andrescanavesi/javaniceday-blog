@@ -79,6 +79,36 @@ describe('Test Web', function () {
       });
   });
 
+  it('should display all tags', (done) => {
+    chai.request(app)
+      .get('/all/tags')
+      .end((err, res) => {
+        assertNotError(err, res);
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('should display all posts', (done) => {
+    chai.request(app)
+      .get('/all/posts')
+      .end((err, res) => {
+        assertNotError(err, res);
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
+  it('should display all search terms', (done) => {
+    chai.request(app)
+      .get('/all/search')
+      .end((err, res) => {
+        assertNotError(err, res);
+        expect(res).to.have.status(200);
+        done();
+      });
+  });
+
   // it('should display robots.txt', (done) => {
   //   chai.request(app)
   //     .get('/robots.txt')

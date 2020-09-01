@@ -62,46 +62,40 @@
 
   <body>
 
- 
+<!--Main Navigation-->
+<header>
 
-<header id="blog-header" class="bg-secondary">
-  <h1>
-    <a href="/" class="text-decoration-none text-white">javaniceday.com</a>
-  </h1>
-  <h3>Software development blog.</h3>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/"><strong>www.javaniceday.com</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" 
+    data-target="#navbarSupportedContent" onclick="toggleNavbar()"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/tag/nodejs">Node.js</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/tag/java">Java</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/tag/salesforce">Salesforce</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/post/about">About</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
 </header>
+<!--Main Navigation-->
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand navbar-light bg-light d-flex flex-wrap">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" 
-  data-target="#navbarToggler" aria-controls="navbarTogglerDemo01" aria-expanded="false" 
-  aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse font-size-1-1" id="navbarToggler">
-    <ul class="navbar-nav mx-auto">
-      <li class="nav-item active">
-          <a class="nav-link" href="/">Home
-              <span class="sr-only">(current)</span>
-          </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/tag/nodejs">Node.js</a>
-          </li>
-           <li class="nav-item">
-            <a class="nav-link" href="/tag/java">Java</a>
-          </li>
-          </li>
-           <li class="nav-item">
-            <a class="nav-link" href="/tag/salesforce">Salesforce</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/post/about">About</a>
-          </li>
-    </ul>
-    
-  </div>
-</nav>
 
   <!-- Page Content -->
   <div class="container pt-4">
@@ -195,6 +189,18 @@
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; 
         <a href="/" class="text-decoration-none "><span class="text-white">www.javaniceday.com</span></a></p>
+    </div>
+    <div class="container">
+      <div class="text-center mt-3 text-muted">
+        <a href="/all/posts" class="text-decoration-none "><span class="text-muted">posts</span></a>
+        |
+        <a href="/all/tags" class="text-decoration-none "><span class="text-muted">tags</span></a>
+        |
+        <a href="/all/search" class="text-decoration-none "><span class="text-muted">search terms</span></a>
+        |
+        <a href="/sitemap.xml" class="text-decoration-none "><span class="text-muted">sitemap</span></a>
+      </div>
+     
     </div>
     <!-- /.container -->
   </footer>
