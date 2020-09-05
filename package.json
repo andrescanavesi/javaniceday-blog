@@ -10,6 +10,7 @@
     "test:web": "NODE_ENV=development nyc --check-coverage --lines 10 --per-file --reporter=html mocha tests/test_web.js --recursive --reporter mochawesome --reporter-options reportDir=./test_results --exit"
   },
   "dependencies": {
+    "apicache": "^1.5.3",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.4",

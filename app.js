@@ -1,5 +1,6 @@
 // const createError = require('http-errors');
 const express = require('express');
+const apicache = require('apicache');
 const useragent = require('express-useragent');
 const favicon = require('express-favicon');
 const basicAuth = require('express-basic-auth');
@@ -46,7 +47,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+const cache = apicache.middleware;
+// with cache at web level using apicache module.
+// all public endpoints are being cached
+app.use('/', cache('24 hours'), indexRouter);
+
 // all requests to this route will require user and password
 app.use('/admin', basicAuth(authOptions), adminRouter);
 app.use('/sitemap.xml', sitemapRouter);
