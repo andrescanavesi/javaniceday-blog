@@ -103,6 +103,7 @@ router.post('/create-post', parseForm, csrfProtection, async (req, res, next) =>
 
     const postCreated = await daoPosts.findById(postId, true, false);
 
+    logger.info(`redirecting to ${postCreated.url_edit}`);
     res.redirect(postCreated.url_edit);
   } catch (e) {
     next(e);

@@ -1,5 +1,5 @@
-<div class="text-muted mb-3">
-  Created at: {{post.created_at_friendly_3}} / 
+<div class="text-muted my-3">
+  Created at: {{post.created_at_friendly_3}} /
 Updated at: {{post.updated_at_friendly_3}}
 </div>
 
@@ -9,23 +9,23 @@ Updated at: {{post.updated_at_friendly_3}}
   <div class="form-group">
     <input type="text" class="form-control" id="title" name="title" value="{{post.title}}" placeholder="Title">
   </div>
-  <div class="form-group">  
-    <textarea class="form-control" id="content" name="content" rows="20" 
+  <div class="form-group">
+    <textarea class="form-control" id="content" name="content" rows="20"
     placeholder="Content", spellcheck="true">{{post.content}}</textarea>
   </div>
-   <div class="form-group">  
+   <div class="form-group">
     <label class="form-check-label" for="summary">Summary</label>
     <textarea class="form-control" id="summary" name="summary" rows="3"
     spellcheck="true">{{post.summary}}</textarea>
   </div>
    <div class="form-group">
     <label class="form-check-label" for="tags">Tags</label>
-    <input type="text" class="form-control" id="tags" name="tags" 
+    <input type="text" class="form-control" id="tags" name="tags"
     value="{{post.tags}}" placeholder="tag1 tag2, tag3">
   </div>
    <div class="form-group">
     <label class="form-check-label" for="featured_image_name">Image name</label>
-    <input type="text" class="form-control" id="featured_image_name" name="featured_image_name" 
+    <input type="text" class="form-control" id="featured_image_name" name="featured_image_name"
     value="{{post.featured_image_name}}" placeholder="image-post.jpg">
   </div>
   <div class="form-group form-check">

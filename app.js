@@ -65,7 +65,7 @@ app.use('/admin', basicAuth(authOptions), adminRouter);
 app.use('/sitemap.xml', sitemapRouter);
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   logger.error(err);
   res.locals.message = 'oops!';
   res.locals.error = {};
