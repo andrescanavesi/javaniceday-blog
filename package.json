@@ -17,6 +17,7 @@
     "csurf": "^1.11.0",
     "csv-string": "^4.0.1",
     "debug": "^4.3.1",
+    "dotenv-safe": "^8.2.0",
     "express": "^4.17.1",
     "express-basic-auth": "^1.2.0",
     "express-favicon": "^2.0.1",
@@ -30,7 +31,7 @@
     "morgan": "^1.10.0",
     "node-cache": "^5.1.2",
     "parse-database-url": "^0.3.0",
-    "pg": "^7.18.2",
+    "pg": "^8.5.1",
     "pretty": "^2.0.0"
   },
   "devDependencies": {
