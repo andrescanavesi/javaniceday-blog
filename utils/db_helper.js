@@ -1,4 +1,3 @@
-// const parseDbUrl = require('parse-database-url');
 const { Pool } = require('pg');
 const NodeCache = require('node-cache');
 const crypto = require('crypto');
