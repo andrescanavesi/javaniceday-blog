@@ -1,3 +1,5 @@
+require('dotenv-safe').config();
+
 // const createError = require('http-errors');
 const express = require('express');
 const apicache = require('apicache');
