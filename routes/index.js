@@ -52,7 +52,7 @@ router.get('/search', async (req, res, next) => {
   }
 });
 
-router.get('/post/:titleSeo', async (req, res, next) => {
+router.get('/post/:titleSeo', async (req, res) => {
   try {
     logger.info(`title seo: ${req.params.titleSeo}`);
     const post = await daoPosts.findByTitleSeo(req.params.titleSeo);

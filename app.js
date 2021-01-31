@@ -1,6 +1,7 @@
+require('dotenv-safe').config();
+
 // const createError = require('http-errors');
 const express = require('express');
-const apicache = require('apicache');
 const useragent = require('express-useragent');
 const favicon = require('express-favicon');
 const basicAuth = require('express-basic-auth');
@@ -32,8 +33,18 @@ const authOptions = {
   unauthorizedResponse: getUnauthorizedResponse,
 };
 
+function shouldCompress(req, res) {
+  if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false;
+  }
+
+  // fallback to standard filter function
+  return compression.filter(req, res);
+}
+
 const app = express();
-app.use(compression());
+app.use(compression({ filter: shouldCompress }));
 app.use(useragent.express());
 
 // view engine setup
@@ -47,17 +58,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const cache = apicache.middleware;
-// with cache at web level using apicache module.
-// all public endpoints are being cached
-app.use('/', cache('24 hours'), indexRouter);
+app.use('/', indexRouter);
 
 // all requests to this route will require user and password
 app.use('/admin', basicAuth(authOptions), adminRouter);
 app.use('/sitemap.xml', sitemapRouter);
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   logger.error(err);
   res.locals.message = 'oops!';
   res.locals.error = {};

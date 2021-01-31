@@ -1,3 +1,5 @@
+require('dotenv-safe').config();
+
 const chai = require('chai');
 const randomstring = require('randomstring');
 const log4js = require('log4js');
