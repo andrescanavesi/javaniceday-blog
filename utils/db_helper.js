@@ -1,4 +1,4 @@
-const parseDbUrl = require('parse-database-url');
+// const parseDbUrl = require('parse-database-url');
 const { Pool } = require('pg');
 const NodeCache = require('node-cache');
 const crypto = require('crypto');
@@ -9,26 +9,40 @@ const queryCache = new NodeCache();
 const logger = log4js.getLogger('db_helper');
 logger.level = 'info';
 
-let dbConfig;
 let rejectUnauthorized = false; // TODO fix this
 if (process.env.NODE_ENV === 'development') {
-  dbConfig = parseDbUrl(process.env.JND_DATABASE_URL);
+  // dbConfig = parseDbUrl(process.env.JND_DATABASE_URL);
   rejectUnauthorized = false;
-} else {
-  dbConfig = parseDbUrl(process.env.DATABASE_URL);
 }
+// const dbConfig = parseDbUrl(process.env.DATABASE_URL);
+
+// more options: https://node-postgres.com/api/client
+const timeout = process.env.DB_TIMEOUT || 1000 * 10;
+// const pool = new Pool({
+//   user: dbConfig.user,
+//   host: dbConfig.host,
+//   database: dbConfig.database,
+//   password: dbConfig.password,
+//   port: dbConfig.port,
+//   statement_timeout: timeout,
+//   query_timeout: timeout,
+//   connectionTimeoutMillis: timeout,
+//   ssl: {
+//     rejectUnauthorized,
+//   },
+//
+// });
 
 const pool = new Pool({
-  user: dbConfig.user,
-  host: dbConfig.host,
-  database: dbConfig.database,
-  password: dbConfig.password,
-  port: dbConfig.port,
+  connectionString: process.env.DATABASE_URL,
+  statement_timeout: timeout,
+  query_timeout: timeout,
+  connectionTimeoutMillis: timeout,
   ssl: {
     rejectUnauthorized,
   },
-
 });
+console.info(pool.options);
 
 /**
  *
