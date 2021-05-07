@@ -2,9 +2,10 @@
 
 .hljs {
 	display: block;
-	overflow-x: auto;
+	overflow-x: auto !important;
 	padding: .5em;
 	background: #1d1f21;
+	font-style: normal !important;
 }
 
 .hljs,

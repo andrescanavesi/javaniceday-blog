@@ -4,15 +4,21 @@
     <!-- Link list -->
 
     <div class="d-flex flex-row">
-      <div class="p-2">
-         <img class="lozad seo-list-img" 
-          src="{{this.default_thumb_loading_image}}"
-          data-src="{{this.featured_image_url}}" alt="image link">
-      </div>
-      <div class="p-2">
-        <a href="{{this.url}}">{{this.name}}</a>
-      </div>
+	    <div class="p-2">
+		    <img class="lozad seo-list-img"
+		         src="{{this.default_thumb_loading_image}}"
+		         data-src="{{this.featured_image_url}}" alt="image post">
+	    </div>
+	    <div>
+		    <h3 class="mb-0"><a href="{{this.url}}">{{this.name}}</a></h3>
+		    <div class="lead text-muted">{{this.sub_title}}</div>
+		    <div><small class="text-muted">{{this.created_at_friendly}}</small></div>
+		    <div>
+			    {{this.summary}}
+		    </div>
+	    </div>
+
     </div>
-  
+
   {{/each}}
 

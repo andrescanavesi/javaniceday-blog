@@ -2,9 +2,28 @@
 
 <h1 class="my-4">{{pageHeader}}</h1> <!-- used to display categories such as tags -->
   {{#each posts}}
-    <!-- Blog Post -->
-    <div class="card mb-4">
-          <img class="lozad card-img-top" 
+	  <!-- Blog Posts -->
+	  <div class="d-flex flex-row">
+		  <div class="p-2">
+			  <img class="lozad seo-list-img"
+			       src="{{this.default_thumb_loading_image}}"
+			       data-src="{{this.thumb_image_url}}" alt="image post">
+		  </div>
+		  <div>
+			  <h3 class="mb-0"><a href="/post/{{this.title_seo}}">{{this.title}}</a></h3>
+			  <div class="lead text-muted">{{this.sub_title}}</div>
+			  <div><small class="text-muted">Posted on {{this.created_at_friendly}}</small></div>
+
+		  </div>
+
+	  </div>
+	  <div class="p-2">
+		  {{this.summary}}
+	  </div>
+
+	  <!-- Blog Posts old -->
+    <div class="card mb-4 d-none">
+          <img class="lozad card-img-top"
           src="{{this.default_loading_image}}"
           data-src="{{this.featured_image_url}}" alt="image post">
           <div class="card-body">

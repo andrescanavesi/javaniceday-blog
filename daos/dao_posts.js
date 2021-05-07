@@ -25,14 +25,19 @@ function convertPost(row) {
     id: row.id,
     title: row.title,
     title_seo: row.title_seo,
+    sub_title: '', // TODO
     created_at: row.created_at,
     created_at_friendly: moment(row.created_at).format('MMM DD, YYYY'),
     created_at_friendly_2: moment(row.created_at).format('YYYY-MM-DD'),
     created_at_friendly_3: moment(row.created_at).format('YYYY-MM-DD HH:mm:ss'),
+    created_at_ago: moment(row.created_at).fromNow(),
+
     updated_at: row.updated_at,
     updated_at_friendly: moment(row.updated_at).format('MMM DD, YYYY'),
     updated_at_friendly_2: moment(row.updated_at).format('YYYY-MM-DD'),
     updated_at_friendly_3: moment(row.updated_at).format('YYYY-MM-DD HH:mm:ss'),
+    updated_at_ago: moment(row.updated_at).fromNow(),
+
     content: pretty(row.content),
     summary: row.summary,
     active: row.active,

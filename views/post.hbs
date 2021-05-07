@@ -1,4 +1,4 @@
- 
+
       <script async="async" defer="true" charset="UTF-8" type="application/ld+json">
           {
           "@context":"http://schema.org",
@@ -24,7 +24,7 @@
            }
         }
       </script>
-  
+
 
 
 <div class="container">
@@ -40,7 +40,7 @@
  <hr>
 
  <!-- Preview Image -->
- <img class="lozad img-fluid rounded" 
+ <img class="lozad img-fluid rounded"
  src="{{post.default_loading_image}}"
  data-src="{{post.featured_image_url}}" alt="featured image">
 
@@ -48,7 +48,7 @@
 
  <!-- Post Content -->
  {{{post.content}}}
- 
+
  <hr>
 {{#each post.tags_array}}
   <a href="/tag/{{this}}" class="btn btn-secondary">{{this}}</a>
@@ -62,10 +62,34 @@
 {{#if showRelatedPosts}}
   <div id="related">
     <h2>More posts</h2>
-    <div class="card-columns">
+
+	  <!-- New view-->
+	  <div>
+    {{#each relatedPosts}}
+	  <div class="d-flex flex-row mb-3">
+		  <div class="p-2">
+			  <img class="lozad seo-list-img"
+			       src="{{this.default_thumb_loading_image}}"
+			       data-src="{{this.thumb_image_url}}" alt="image post">
+		  </div>
+		  <div>
+			  <h3 class="mb-0"><a href="/post/{{this.title_seo}}">{{this.title}}</a></h3>
+			  <div class="lead text-muted">{{this.sub_title}}</div>
+			  <div><small class="text-muted">www.javaniceday.com</small></div>
+			  <div><small class="text-muted">Posted on {{this.created_at_friendly}}</small></div>
+			  <div>
+				  {{this.summary}}
+			  </div>
+		  </div>
+
+	  </div>
+
+    {{/each}}
+  </div>
+	  <div class="card-columns d-none">
       {{#each relatedPosts}}
         <div class="card">
-          <img class="lozad card-img-top" 
+          <img class="lozad card-img-top"
           src="{{this.default_thumb_loading_image}}"
           data-src="{{this.thumb_image_url}}" alt="image post">
           <div class="card-body">
@@ -82,5 +106,5 @@
 
   </div> <!-- END related posts -->
 {{/if}}
-    
+
 </div> <!-- END container -->

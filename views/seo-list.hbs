@@ -2,20 +2,19 @@
 
   {{#each posts}}
     <!-- SEO list -->
-
     <div class="d-flex flex-row">
       <div class="p-2">
-         <img class="lozad seo-list-img" 
+         <img class="lozad seo-list-img"
           src="{{this.default_thumb_loading_image}}"
           data-src="{{this.thumb_image_url}}" alt="image post">
       </div>
-  <div class="p-2">
-    <a href="/post/{{this.title_seo}}">{{this.title}}</a>
-          <br/>
-          {{this.summary}}
-  </div>
+	  <div class="p-2">
+	    <a href="/post/{{this.title_seo}}">{{this.title}}</a>
+	          <br/>
+	          {{this.summary}}
+	  </div>
     </div>
-  
+
   {{/each}}
-   
+
 

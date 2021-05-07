@@ -5,7 +5,7 @@ CREATE TABLE posts (
     title character varying(120) NOT NULL,
     title_seo character varying(100) NOT NULL,
     content character varying(3000) NOT NULL,
-    summary character varying(300) NOT NULL,
+    summary character varying(600) NOT NULL,
     active boolean NOT NULL DEFAULT false,
     featured_image_name character varying(200) NOT NULL,
     tags character varying(100) NOT NULL
@@ -44,3 +44,5 @@ VALUES
 ('2020-06-02', '2020-06-02', 'build sitemap', 'build-sitemap', true, ''),
 ('2020-06-02', '2020-06-02', 'nodejs sitemap', 'nodejs-sitemap', true, ''),
 ('2020-06-02', '2020-06-02', 'better-queue', 'better-queue', true, '')
+
+ALTER TABLE public.posts ADD sub_title varchar(200) NULL;
