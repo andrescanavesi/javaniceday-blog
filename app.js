@@ -47,13 +47,11 @@ function shouldCompress(req, res) {
 const app = express();
 
 // redirect any page form http to https
+// redirect also from non-www to www
 app.use((req, res, next) => {
-  logger.info(`*** host: ${req.headers.host}`);
-  logger.info(`*** url: ${req.url}`);
   if (process.env.NODE_ENV !== 'development' && process.env.NODE_ENV !== 'test' && !utils.isSecure(req)) {
     const host = req.headers.host.startsWith('www.') ? req.headers.host : `www.${req.headers.host}`;
     const url = `https://${host}${req.url}`;
-    logger.info(`redirecting from http to https: ${url}`);
     res.redirect(301, url);
   } else {
     next();
