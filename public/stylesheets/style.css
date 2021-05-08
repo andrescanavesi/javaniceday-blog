@@ -1,9 +1,6 @@
-/* body{
-  padding-top: 0px;
-  font-family: 'Gotham Light', 'Montserrat' !important;
-  font-size: 1.2rem;
-  font-weight: 500;
-} */
+body{
+  line-height: 2rem;
+}
 
 code{
   padding: .1em 1em;
@@ -43,4 +40,9 @@ h3{
 .container{
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.customHeader {
+  min-height: 8rem;
+  background-color: #000000 !important;
 }
