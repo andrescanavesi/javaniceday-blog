@@ -1,18 +1,18 @@
 #!/usr/bin/env node
 
-/**
- * Module dependencies.
- */
-
 const app = require('../app');
-const debug = require('debug')('javaniceday-blog:server');
+require('dotenv-safe').config();
 const http = require('http');
+const log4js = require('log4js');
+
+const logger = log4js.getLogger('www');
+logger.level = 'info';
 
 /**
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '300');
 app.set('port', port);
 
 /**
@@ -86,5 +86,6 @@ function onListening() {
   const bind = typeof addr === 'string'
     ? `pipe ${addr}`
     : `port ${addr.port}`;
-  debug(`Listening on ${bind}`);
+  logger.info(`Listening on ${bind}`);
+  logger.info(`Base url: ${process.env.JND_BASE_URL}`);
 }

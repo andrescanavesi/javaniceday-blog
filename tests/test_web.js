@@ -111,15 +111,15 @@ describe('Test Web', function () {
       });
   });
 
-  // it('should display robots.txt', (done) => {
-  //   chai.request(app)
-  //     .get('/robots.txt')
-  //     .end((err, res) => {
-  //       assertNotError(err, res);
-  //       expect(res).to.have.status(200);
-  //       expect(res).to.have.headers;
-  //       expect(res).to.be.all; // TODO validate txt content
-  //       done();
-  //     });
-  // });
+  it('should display robots.txt', (done) => {
+    chai.request(app)
+      .get('/robots.txt')
+      .end((err, res) => {
+        assertNotError(err, res);
+        expect(res).to.have.status(200);
+        expect(res).to.have.headers;
+        expect(res).to.be.all; // TODO validate txt content
+        done();
+      });
+  });
 });

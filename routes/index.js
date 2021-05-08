@@ -140,6 +140,18 @@ router.get('/ads.txt', (req, res, next) => {
     next(e);
   }
 });
+router.get('/robots.txt', async (req, res, next) => {
+  try {
+    const content = `User-agent: *\nAllow: /\nSitemap: ${process.env.JND_BASE_URL}sitemap.xml`;
+    res.set('Content-Type', 'text/plain');
+    res.status(200);
+    res.send(content);
+  } catch (e) {
+    next(e);
+  }
+});
+
+
 /**
  * SEO list of posts
  */
