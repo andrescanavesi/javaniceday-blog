@@ -2,18 +2,25 @@
 
   {{#each posts}}
     <!-- SEO list -->
-    <div class="d-flex flex-row">
-      <div class="p-2">
-         <img class="lozad seo-list-img"
-          src="{{this.default_thumb_loading_image}}"
-          data-src="{{this.thumb_image_url}}" alt="image post">
-      </div>
-	  <div class="p-2">
-	    <a href="/post/{{this.title_seo}}">{{this.title}}</a>
-	          <br/>
-	          {{this.summary}}
-	  </div>
+
+    <div class="container">
+	    <div class="row">
+		    <div class="col-md-4 p-2">
+			    <img class="lozad card-img-top"
+			         src="{{this.default_thumb_loading_image}}"
+			         data-src="{{this.thumb_image_url}}" alt="image post">
+		    </div>
+		    <div class="col-md-8 pl-2">
+			    <h3 class="mb-0"><a href="/post/{{this.title_seo}}" class="text-decoration-none">{{this.title}}</a></h3>
+			    <div class="lead text-muted">{{this.sub_title}}</div>
+			    <div><small class="text-muted">{{this.created_at_friendly}}</small></div>
+			    <div>{{this.summary}}</div>
+		    </div>
+
+	    </div>
     </div>
+
+   <hr/>
 
   {{/each}}
 
