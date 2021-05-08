@@ -31,11 +31,13 @@
 
      <!-- Title -->
  <h1>{{post.title}}</h1>
-
+	<h3>
+		<small class="text-muted lead">{{post.sub_title}}</small>
+	</h3>
  <hr>
 
  <!-- Date/Time -->
- <div class="d-flex">
+ <div class="d-flex mb-3">
 	 <div>
 		 <a href="{{imagesBaseUrl}}javaniceday.com/andres-canavesi-linkedin-2021.jpg">
 		 <img class="lozad" data-src="https://res.cloudinary.com/dniiru5xy/image/upload/w_50,h_50,c_thumb,g_face,r_max/v1620493572/javaniceday.com/andres-canavesi-linkedin-2021.jpg" alt="Andres Canavesi"></div>
@@ -44,7 +46,7 @@
 	 <div class="ml-2 pt-3 "><span class="text-muted">{{post.created_at_friendly}}</span></div>
  </div>
 
- <hr>
+
 
  <!-- Preview Image -->
  <img class="lozad img-fluid rounded"
