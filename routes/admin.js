@@ -53,12 +53,6 @@ router.get('/create-post', csrfProtection, async (req, res, next) => {
     const defaultContent = `
 
     <!-- Template -->
-    
-    <img src="https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,w_900/v1590442770/javaniceday.com/christopher-gower-m_HRfLhgABo-unsplash.jpg" class="rounded mx-auto d-block img-fluid" alt="image" />
-    
-    <p class="font-weight-bold">
-      Important stuff
-    </p>
 
     <pre>
       <code class="javascript">
@@ -66,14 +60,24 @@ router.get('/create-post', csrfProtection, async (req, res, next) => {
       </code>
     </pre>
 
-    <p class="font-weight-lighter">
-        Photo by...
-    </p>
+    <div class="alert alert-danger" role="alert">
+      Test alert
+    </div>
+    
+    <div class="alert alert-primary" role="alert">
+      Test info
+    </div>
+
+    <div class="alert alert-warning" role="alert">
+      Test info
+    </div>
+    
     `;
 
     responseJson.post = {
       title: '',
       title_seo: '',
+      sub_title: '',
       content: defaultContent,
       summary: '',
       featured_image_name: 'christopher-gower-m_HRfLhgABo-unsplash.jpg',
@@ -92,6 +96,7 @@ router.post('/create-post', parseForm, csrfProtection, async (req, res, next) =>
   try {
     const post = {
       title: req.body.title,
+      sub_title: req.body.sub_title,
       content: req.body.content,
       summary: req.body.summary,
       featured_image_name: req.body.featured_image_name,
@@ -133,6 +138,7 @@ router.post('/edit/:id', parseForm, csrfProtection, async (req, res, next) => {
     responseJson.csrfToken = req.csrfToken();
     let post = await daoPosts.findById(req.params.id, true, false);
     post.title = req.body.title;
+    post.sub_title = req.body.sub_title;
     post.content = req.body.content;
     post.summary = req.body.summary;
     post.tags = req.body.tags;

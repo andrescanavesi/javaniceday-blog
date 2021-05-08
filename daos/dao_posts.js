@@ -19,13 +19,13 @@ const searchIndex = new FlexSearch(preset);
  * @param {*} row
  */
 function convertPost(row) {
-  const baseImagesUrl = process.env.JND_BASE_IMAGE_URL;
-  const baseThumbImagesUrl = process.env.JND_BASE_THUMB_IMAGE_URL;
+  const baseImagesUrl = process.env.BASE_IMAGE_URL;
+  const baseThumbImagesUrl = process.env.BASE_THUMB_IMAGE_URL;
   const result = {
     id: row.id,
     title: row.title,
     title_seo: row.title_seo,
-    sub_title: '', // TODO
+    sub_title: row.sub_title,
     created_at: row.created_at,
     created_at_friendly: moment(row.created_at).format('MMM DD, YYYY'),
     created_at_friendly_2: moment(row.created_at).format('YYYY-MM-DD'),
@@ -42,8 +42,6 @@ function convertPost(row) {
     summary: row.summary,
     active: row.active,
     featured_image_name: row.featured_image_name,
-    featured_image_url: baseImagesUrl + row.featured_image_name,
-    thumb_image_url: baseThumbImagesUrl + row.featured_image_name,
     tags: row.tags,
     tags_array: row.tags.split(','),
     url: `${process.env.JND_BASE_URL}post/${row.title_seo}`,
@@ -51,6 +49,14 @@ function convertPost(row) {
     default_loading_image: process.env.JND_DEFAULT_LOADING_IMAGE,
     default_thumb_loading_image: process.env.JND_DEFAULT_THUMB_LOADING_IMAGE,
   };
+
+  if (row.featured_image_name.includes(process.env.CLOUDINARY_FOLDER)) {
+    result.featured_image_url = baseImagesUrl + row.featured_image_name;
+    result.thumb_image_url = baseThumbImagesUrl + row.featured_image_name;
+  } else {
+    result.featured_image_url = `${baseImagesUrl + process.env.CLOUDINARY_FOLDER}/${row.featured_image_name}`;
+    result.thumb_image_url = `${baseThumbImagesUrl + process.env.CLOUDINARY_FOLDER}/${row.featured_image_name}`;
+  }
 
   return result;
 }
@@ -67,8 +73,9 @@ module.exports.insert = async function (post) {
     summary, 
     active, 
     featured_image_name, 
-    tags) 
-  VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING id`;
+    tags,
+    sub_title) 
+  VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id`;
   const bindings = [
     today,
     today,
@@ -79,6 +86,7 @@ module.exports.insert = async function (post) {
     post.active,
     post.featured_image_name,
     post.tags,
+    post.sub_title,
   ];
 
   const result = await dbHelper.query(query, bindings, false);
@@ -93,8 +101,8 @@ module.exports.update = async function (post) {
   const today = moment().format('YYYY-MM-DD HH:mm:ss');
   const query = `UPDATE posts 
     SET title=$1, title_seo=$2, content=$3, active=$4, updated_at=$5,
-    summary=$6, featured_image_name=$7, tags=$8
-    WHERE id=$9`;
+    summary=$6, featured_image_name=$7, tags=$8, sub_title=$9
+    WHERE id=$10`;
   const titleSeo = utils.dashString(post.title);
   const bindings = [
     post.title,
@@ -105,6 +113,7 @@ module.exports.update = async function (post) {
     post.summary,
     post.featured_image_name,
     post.tags,
+    post.sub_title,
     post.id,
   ];
 
