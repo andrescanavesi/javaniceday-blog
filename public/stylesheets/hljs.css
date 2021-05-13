@@ -3,9 +3,11 @@
 .hljs {
 	display: block;
 	overflow-x: auto !important;
-	padding: .5em;
+	padding-left: 0.5rem;
 	background: #1d1f21;
 	font-style: normal !important;
+	line-height: 20px;
+	font-size: 0.65rem;
 }
 
 .hljs,
