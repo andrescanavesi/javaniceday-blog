@@ -14,6 +14,7 @@ const utils = require('./utils/utils');
 const indexRouter = require('./routes/index');
 const adminRouter = require('./routes/admin');
 const sitemapRouter = require('./routes/sitemap');
+const frandomRouter = require('./routes/frandom');
 
 const logger = log4js.getLogger('app.js');
 logger.level = 'info';
@@ -77,10 +78,11 @@ app.use('/', indexRouter);
 // all requests to this route will require user and password
 app.use('/admin', basicAuth(authOptions), adminRouter);
 app.use('/sitemap.xml', sitemapRouter);
+app.use('/frandom', frandomRouter);
 
 // error handler
 app.use((err, req, res) => {
-  logger.error(err);
+  logger.error(err.message);
   res.locals.message = 'oops!';
   res.locals.error = {};
   // set locals, only providing error in development

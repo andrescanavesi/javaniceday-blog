@@ -1,0 +1,124 @@
+<h1 class="display-4 fw-bold lh-1 mb-3">Another random API</h1>
+<p class="lead">A simple API to generate random data such as companies and persons.
+    It is open to the public, no API key or registration required.
+</p>
+<p><a href="#">See source code</a></p>
+
+
+<h2>Available endpoints</h2>
+
+<ul>
+    <li><a href="#">/api/companies</a></li>
+    <li><a href="#">/api/persons</a></li>
+    <li><a href="#">/api/numbers</a></li>
+</ul>
+
+<h3>Companies</h3>
+
+<div>Parameters</div>
+<ul>
+    <li><strong>countryCode:</strong> us or mx to get data from those countries</li>
+    <li><strong>quantity:</strong> number of records to be returned</li>
+</ul>
+
+<h3>Persons</h3>
+
+<div>Parameters</div>
+<ul>
+    <li><strong>countryCode:</strong> us or mx to get data from those countries</li>
+    <li><strong>quantity:</strong> number of records to be returned</li>
+</ul>
+
+<h3>Numbers</h3>
+
+<div>Parameters</div>
+<ul>
+    <li><strong>min:</strong> default 0</li>
+    <li><strong>max:</strong> default 1000</li>
+    <li><strong>quantity:</strong> number of records to be returned</li>
+</ul>
+
+<h2>List all endpoints</h2>
+
+<pre><code class="javascript">
+fetch('http://localhost:3000/api/')
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+</code></pre>
+
+<div>Output</div>
+<pre><code class="json">
+{
+    companies: [
+            {
+                endpoint: "/api/companies",
+                description: "Companies from US"
+            },
+            {
+                endpoint: "/api/companies?countryCode=mx&quantity=5",
+                description: "Companies from MX"
+            }
+        ],
+        persons: [
+            {
+                endpoint: "/api/persons",
+                description: "A person from US"
+            },
+            {
+                endpoint: "/api/persons?countryCode=mx&quantity=5",
+                description: "A person from MX"
+            }
+        ]
+}
+</code></pre>
+
+<h3>Companies</h3>
+<pre><code class="javascript">
+fetch('http://localhost:3000/api/companies')
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+</code></pre>
+
+
+<div>Output</div>
+
+<pre><code class="json">
+[
+    {
+        code: "us",
+        name: "Caroll",
+        type: "Inc",
+        displayName: "Caroll Inc"
+    },
+    {
+        code: "us",
+        name: "Caroll",
+        type: "Inc",
+        displayName: "Caroll Inc"
+    },
+    {
+        code: "us",
+        name: "Bartell",
+        type: "Capital",
+        displayName: "Bartell Capital"
+    },
+    {
+        code: "us",
+        name: "Mertz",
+        type: "",
+        displayName: "Mertz "
+    }
+
+]
+</code></pre>
+
+<h4>Companies with parameters</h4>
+Fetch 5 companies from MX
+
+<pre><code class="javascript">
+fetch('http://localhost:3000/api/companies?countryCode=mx&quantity=5')
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+</code></pre>
+
+

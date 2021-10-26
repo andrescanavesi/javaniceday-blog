@@ -1,12 +1,25 @@
 body{
   line-height: 2rem;
+  color: #fff !important;
+  background-color: #212529 !important;
 }
 
-code{
-  padding: .1em 1em;
-  color: rgb(29, 31, 33);
-  background-color: #F0F0F0;
-  font-style: italic;
+/*code{*/
+/*  padding: .1em 1em;*/
+/*  color: rgb(29, 31, 33);*/
+/*  background-color: #F0F0F0;*/
+/*  font-style: italic;*/
+/*}*/
+
+code {
+  background-color: #000 !important;
+  padding: 0px 12px 16px 12px !important;
+  margin: 0 !important;
+}
+
+pre {
+  padding: 0 !important;
+  margin: 6px 0px 10px 0px !important
 }
 
 h1{
@@ -42,7 +55,10 @@ h3{
   padding-right: 5px;
 }
 
-.customHeader {
-  min-height: 8rem;
-  background-color: #000000 !important;
+a {
+  color: #00B7FF;
+}
+
+.bg-dark{
+  background-color: #491777 !important;
 }
