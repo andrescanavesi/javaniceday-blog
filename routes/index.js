@@ -227,6 +227,7 @@ router.get('/all/:kind', async (req, res, next) => {
             featured_image_url: item.thumb_image_url,
             summary: item.summary,
             created_at_friendly: `Posted on ${item.created_at_friendly}`,
+            tags_array: item.tags_array,
           });
         });
         break;
