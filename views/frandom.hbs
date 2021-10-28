@@ -1,0 +1,167 @@
+<h1 class="display-4 fw-bold lh-1 mb-3">API to generate random fake data</h1>
+<p class="lead">A simple API to generate random data such as companies and persons.
+    It is open to the public. No API key required. No registration required.
+</p>
+
+
+<h2>Available endpoints</h2>
+
+<ul>
+    <li><a href="/frandom/api/companies">/frandom/api/companies</a></li>
+    <li><a href="/frandom/api/persons">/frandom/api/persons</a></li>
+    <li><a href="/frandom/api/numbers">/frandom/api/numbers</a></li>
+</ul>
+
+<h3>/companies</h3>
+
+<div>Parameters</div>
+<ul>
+    <li><strong>countryCode:</strong> us or mx to get data from those countries</li>
+    <li><strong>quantity:</strong> number of records to be returned</li>
+</ul>
+
+<h3>/persons</h3>
+
+<div>Parameters</div>
+<ul>
+    <li><strong>countryCode:</strong> us or mx to get data from those countries</li>
+    <li><strong>quantity:</strong> number of records to be returned</li>
+</ul>
+
+<h3>/numbers</h3>
+
+<div>Parameters</div>
+<ul>
+    <li><strong>min:</strong> default 0</li>
+    <li><strong>max:</strong> default 1000</li>
+    <li><strong>quantity:</strong> number of records to be returned</li>
+</ul>
+
+<h2>List all endpoints</h2>
+
+<pre><code class="javascript">
+fetch('https://www.javaniceday.com/frandom/api/')
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+</code></pre>
+
+<div>Output</div>
+<pre><code class="json">
+{
+    companies: [
+        {
+            endpoint: "/frandom/api/companies",
+            description: "Companies from US"
+        },
+        {
+            endpoint: "/frandom/api/companies?countryCode=mx&quantity=5",
+            description: "Companies from MX"
+        }
+    ],
+    persons: [
+        {
+            endpoint: "/frandom/api/persons",
+            description: "A person from US"
+        },
+        {
+            endpoint: "/frandom/api/persons?countryCode=mx&quantity=5",
+            description: "A person from MX"
+        }
+    ],
+    numbers: [
+        {
+            endpoint: "/frandom/api/numbers",
+            description: "A person from US"
+        },
+        {
+            endpoint: "/frandom/api/numbers?min=0&max=700&quantity=5",
+            description: "Random numbers between two numbers"
+        }
+    ]
+}
+</code></pre>
+
+<h3>Companies</h3>
+<pre><code class="javascript">
+fetch('https://www.javaniceday.com/frandom/api/companies')
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+</code></pre>
+
+
+<div>Output</div>
+
+<pre><code class="json">
+[
+    {
+        code: "us",
+        name: "Caroll",
+        type: "Inc",
+        displayName: "Caroll Inc"
+    },
+    {
+        code: "us",
+        name: "Caroll",
+        type: "Inc",
+        displayName: "Caroll Inc"
+    },
+    {
+        code: "us",
+        name: "Bartell",
+        type: "Capital",
+        displayName: "Bartell Capital"
+    },
+    {
+        code: "us",
+        name: "Mertz",
+        type: "",
+        displayName: "Mertz "
+    }
+
+]
+</code></pre>
+
+<div>Fetch 5 companies from MX</div>
+
+<pre><code class="javascript">
+fetch('https://www.javaniceday.com/frandom/api/companies?countryCode=mx&quantity=5')
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+</code></pre>
+
+<div>Output:</div>
+
+<pre><code class="json">
+[
+    {
+        code: "mx",
+        name: "Núñez - Ruiz",
+        type: "",
+        displayName: "Núñez - Ruiz "
+    },
+    {
+        code: "mx",
+        name: "Núñez - Ruiz",
+        type: "",
+        displayName: "Núñez - Ruiz "
+    },
+    {
+        code: "mx",
+        name: "Barragán - Tejeda",
+        type: "S.L",
+        displayName: "Barragán - Tejeda S.L"
+    },
+    {
+        code: "mx",
+        name: "Páez - Gamboa",
+        type: "S.L",
+        displayName: "Páez - Gamboa S.L"
+    },
+    {
+        code: "mx",
+        name: "Tafoya",
+        type: "S.A",
+        displayName: "Tafoya S.A"
+    }
+]
+</code></pre>

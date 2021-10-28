@@ -24,9 +24,21 @@ router.get('/', async (req, res, next) => {
     rootUrl.priority = '1.0';
     rootUrl['image:image'] = {
       'image:loc': process.env.JND_DEFAULT_IMAGE_URL,
-      'image:caption': 'javaniceday.com. Software development blog',
+      'image:caption': 'www.javaniceday.com. Software development blog',
     };
     collection.push(rootUrl);
+
+    // add site root url
+    const frandomUrl = {};
+    frandomUrl.loc = `${baseUrl}frandom`;
+    frandomUrl.lastmod = today;
+    frandomUrl.changefreq = 'weekly';
+    frandomUrl.priority = '2.0';
+    frandomUrl['image:image'] = {
+      'image:loc': process.env.JND_DEFAULT_IMAGE_URL,
+      'image:caption': 'www.javaniceday.com. Frandom API',
+    };
+    collection.push(frandomUrl);
 
     // add posts urls
     for (let i = 0; i < posts.length; i++) {
