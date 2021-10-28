@@ -65,9 +65,14 @@ router.get('/post/:titleSeo', async (req, res) => {
     responseJson.pageImage = post.featured_image_url;
     responseJson.pageDateModified = post.updated_at_friendly_2;
 
-    const posts = await daoPosts.findRelated(post.tags, post.id);
+    // const posts = await daoPosts.findRelated(post.tags, post.id);
+    let relatedPosts = [];
+    if (post.tags_array && post.tags_array.length > 0) {
+      // relatedPosts = await daoPosts.findByTag(post.tags[0], true);
+      relatedPosts = await daoPosts.findByTags(post.tags_array, true);
+    }
 
-    responseJson.relatedPosts = posts;
+    responseJson.relatedPosts = relatedPosts;
 
     if (post.title_seo === 'about') {
       responseJson.showRelatedPosts = false;
@@ -150,7 +155,6 @@ router.get('/robots.txt', async (req, res, next) => {
     next(e);
   }
 });
-
 
 /**
  * SEO list of posts

@@ -110,6 +110,12 @@
 					    <small class="text-muted">www.javaniceday.com</small>
 				    </div>
 
+                    <div>
+                        {{#each this.tags_array}}
+                            <a href="/tag/{{this}}" class="btn btn-secondary">{{this}}</a>
+                        {{/each}}
+                    </div>
+
 			    </div>
 		    </div>
 

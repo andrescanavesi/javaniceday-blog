@@ -19,6 +19,11 @@
 					  <small class="text-muted">{{this.created_at_friendly}}</small>
 				  </div>
 				  <div>{{this.summary}}</div>
+                  <div>
+                      {{#each this.tags_array}}
+                          <a href="/tag/{{this}}" class="btn btn-secondary">{{this}}</a>
+                      {{/each}}
+                  </div>
 			  </div>
 		  </div>
 

@@ -3,7 +3,7 @@ const pretty = require('pretty');
 
 moment.locale('en');
 
-const FlexSearch = require('flexsearch');
+const { Index } = require('flexsearch');
 const log4js = require('log4js');
 const dbHelper = require('../utils/db_helper');
 const utils = require('../utils/utils');
@@ -11,8 +11,7 @@ const utils = require('../utils/utils');
 const logger = log4js.getLogger('dao_posts');
 logger.level = 'info';
 
-const preset = 'fast';
-const searchIndex = new FlexSearch(preset);
+let searchIndex;
 
 /**
  *
@@ -255,6 +254,23 @@ module.exports.findByTag = async function (tag, witchCache = true) {
   return posts;
 };
 
+module.exports.findByTags = async function (tags, witchCache = true) {
+  const promises = [];
+  tags.forEach((tag) => {
+    promises.push(this.findByTag(tag, witchCache));
+  });
+
+  // every promise is an array of posts
+  const results = await Promise.all(promises);
+  let allPosts = [];
+  results.forEach((posts) => {
+    allPosts = allPosts.concat(posts);
+  });
+
+  // return unique posts
+  return allPosts.filter((thing, index, self) => self.findIndex((t) => t.id === thing.id) === index);
+};
+
 /**
  *
  */
@@ -286,16 +302,24 @@ module.exports.buildSearchIndex = async function () {
   // console.time('buildIndexTook');
   logger.info('building index...');
 
+  const options = {
+    charset: 'latin:extra',
+    preset: 'score',
+    tokenize: 'full',
+    cache: false,
+  };
+  searchIndex = new Index(options);
+
   const all = await this.findAll();
 
   const size = all.length;
   for (let i = 0; i < size; i++) {
     // we might concatenate the fields we want for our content
-    const content = `${all[i].title} ${all[i].tags}`;
-    const key = parseInt(all[i].id);
+    const content = `${all[i].title}`;
+    const key = Number(all[i].id);
     searchIndex.add(key, content);
   }
-  logger.info(`index built, length: ${searchIndex.length}`);
+  logger.info('index built');
   // console.timeEnd('buildIndexTook');
 };
 
@@ -304,40 +328,38 @@ module.exports.buildSearchIndex = async function () {
    * @param {number} excludeId optinal exclude the given post id
    * @returns {[]} array of posts
    */
-module.exports.findRelated = async function (text, excludeId = null) {
+module.exports.findRelated = async function (text, excludeId) {
   logger.info(`look for related results with: ${text}`);
-  if (searchIndex.length === 0) {
+  if (!searchIndex) {
     await this.buildSearchIndex();
   }
 
   const limit = 16;
-  const resultIds = await searchIndex.search({
-    query: text,
-    limit,
-    suggest: true, // When suggestion is enabled all results will be filled up (until limit, default 1000) with similar matches ordered by relevance.
-  });
+  // When suggestion is enabled all results will be filled up (until limit, default 1000) with similar matches ordered by relevance.
+  const resultIds = await searchIndex.search(text, limit, { suggest: true });
 
   logger.info(`related results: ${resultIds.length}`);
+  logger.info(resultIds);
   let results = [];
   if (resultIds.length > 0) {
     results = await this.findByIds(resultIds);
     results = results.filter((post) => post.id !== excludeId);
   }
 
-  const limitHalf = Math.round(limit / 2);
-  if (results.length < limitHalf) {
-    logger.info('not enought related posts, result will filled up with more posts');
-    const morePosts = await findWithLimit(limitHalf);
-    morePosts.forEach((post) => {
-      let exists = false;
-      results.forEach((postResults) => {
-        if (post.id === postResults.id || post.id === excludeId) {
-          exists = true;
-        }
-      });
-      if (!exists && results.length < limit) results.push(post);
-    });
-  }
+  // const limitHalf = Math.round(limit / 2);
+  // if (results.length < limitHalf) {
+  //   logger.info('not enought related posts, result will filled up with more posts');
+  //   const morePosts = await findWithLimit(limitHalf);
+  //   morePosts.forEach((post) => {
+  //     let exists = false;
+  //     results.forEach((postResults) => {
+  //       if (post.id === postResults.id || post.id === excludeId) {
+  //         exists = true;
+  //       }
+  //     });
+  //     if (!exists && results.length < limit) results.push(post);
+  //   });
+  // }
 
   return results;
 };
