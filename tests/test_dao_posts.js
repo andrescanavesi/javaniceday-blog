@@ -19,7 +19,7 @@ describe('Test dao_posts', function () {
 
   it('should exclude a given from related search', async () => {
     const post = await daoPosts.findById(1);
-    const result = await daoPosts.findRelated(post.tags, post.id);
+    const result = await daoPosts.findRelated('node', post.id);
     assert.isNotNull(result);
     // logger.info(JSON.stringify(result, null, 2));
     assert.isAtLeast(result.length, 1);

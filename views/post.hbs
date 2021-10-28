@@ -93,12 +93,12 @@
 
 	    <div class="container">
 		    <div class="row">
-			    <div class="col-sm-4 p-2">
+			    <div class="col-sm-3 p-2">
 				    <img class="lozad card-img-top"
 				         src="{{this.default_thumb_loading_image}}"
 				         data-src="{{this.thumb_image_url}}" alt="image post">
 			    </div>
-			    <div class="col-sm-8 p-0 pl-2">
+			    <div class="col-sm-9 p-0 pl-2">
 				    <h3 class="mb-0"><a href="/post/{{this.title_seo}}" class="text-decoration-none">{{this.title}}</a></h3>
 				    <div class="text-muted">{{this.sub_title}}</div>
 
@@ -109,6 +109,12 @@
 					    <span class="text-muted"> - </span>
 					    <small class="text-muted">www.javaniceday.com</small>
 				    </div>
+
+                    <div>
+                        {{#each this.tags_array}}
+                            <a href="/tag/{{this}}" class="btn btn-secondary">{{this}}</a>
+                        {{/each}}
+                    </div>
 
 			    </div>
 		    </div>

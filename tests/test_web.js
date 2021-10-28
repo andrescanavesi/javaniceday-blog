@@ -41,7 +41,7 @@ describe('Test Web', function () {
 
   it('should search', (done) => {
     chai.request(app)
-      .get('/search?q=nodejs')
+      .get('/search?q=node')
       .end((err, res) => {
         assertNotError(err, res);
         expect(res).to.have.status(200);
