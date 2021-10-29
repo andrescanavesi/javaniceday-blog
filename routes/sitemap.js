@@ -21,7 +21,6 @@ router.get('/', async (req, res, next) => {
     rootUrl.loc = baseUrl;
     rootUrl.lastmod = today;
     rootUrl.changefreq = 'daily';
-    rootUrl.priority = '1.0';
     rootUrl['image:image'] = {
       'image:loc': process.env.JND_DEFAULT_IMAGE_URL,
       'image:caption': 'www.javaniceday.com. Software development blog',
@@ -33,7 +32,6 @@ router.get('/', async (req, res, next) => {
     frandomUrl.loc = `${baseUrl}frandom`;
     frandomUrl.lastmod = today;
     frandomUrl.changefreq = 'weekly';
-    frandomUrl.priority = '2.0';
     frandomUrl['image:image'] = {
       'image:loc': process.env.JND_DEFAULT_IMAGE_URL,
       'image:caption': 'www.javaniceday.com. Frandom API',
