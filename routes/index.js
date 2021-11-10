@@ -26,7 +26,8 @@ router.get('/', async (req, res, next) => {
       responseJson.isHomePage = true;
       responseJson.searchText = '';
       // eslint-disable-next-line max-len
-      responseJson.defaultLoadingImage = 'https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,f_auto,q_50,w_900/v1597923257/javaniceday.com/default-image.jpg';
+      responseJson.defaultLoadingImage =
+        'https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,f_auto,q_50,w_900/v1597923257/javaniceday.com/default-image.jpg';
       res.render('index', responseJson);
     }
   } catch (e) {
@@ -161,7 +162,7 @@ router.get('/robots.txt', async (req, res, next) => {
  */
 router.get('/l/:termSeo', async (req, res, next) => {
   try {
-    const { termSeo } = req.params;
+    const {termSeo} = req.params;
     const responseJson = responseHelper.getResponseJson(req);
     const searchTerm = await daoSearchTerms.findByTerm(termSeo, false, true, true);
 
@@ -185,7 +186,7 @@ router.get('/l/:termSeo', async (req, res, next) => {
  */
 router.get('/all/:kind', async (req, res, next) => {
   try {
-    const { kind } = req.params;
+    const {kind} = req.params;
     const responseJson = responseHelper.getResponseJson(req);
     const links = [];
     let title = '';
@@ -196,7 +197,7 @@ router.get('/all/:kind', async (req, res, next) => {
         title = 'All tags';
         description = 'All tags';
         records = await daoPosts.findAllTags(true);
-        records.forEach((item) => {
+        records.forEach(item => {
           links.push({
             url: item.url,
             name: item.name,
@@ -208,7 +209,7 @@ router.get('/all/:kind', async (req, res, next) => {
         title = 'All search terms';
         description = 'All search terms';
         records = await daoSearchTerms.findAll(false, true);
-        records.forEach((item) => {
+        records.forEach(item => {
           links.push({
             url: item.url,
             name: item.term,
@@ -220,7 +221,7 @@ router.get('/all/:kind', async (req, res, next) => {
         title = 'All posts';
         description = 'All posts';
         records = await daoPosts.findAll(true, true);
-        records.forEach((item) => {
+        records.forEach(item => {
           links.push({
             url: item.url,
             name: item.title,
@@ -231,7 +232,8 @@ router.get('/all/:kind', async (req, res, next) => {
           });
         });
         break;
-      default: throw new Error('Unsupported kind');
+      default:
+        throw new Error('Unsupported kind');
     }
 
     responseJson.links = links;
@@ -240,6 +242,26 @@ router.get('/all/:kind', async (req, res, next) => {
     responseJson.title = title;
     responseJson.description = description;
     res.render('link-list', responseJson);
+  } catch (e) {
+    next(e);
+  }
+});
+
+router.get('/about/andres-canavesi', async (req, res, next) => {
+  try {
+    const responseJson = responseHelper.getResponseJson(req);
+    responseJson.posts = [];
+    responseJson.linkToThisPage = `${process.env.JND_BASE_URL}about/andres-canavesi`;
+    responseJson.featuredImageUrl =
+      'https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,w_900/v1590442770/javaniceday.com/andres-canavesi-linkedin-2021.jpg';
+    responseJson.title = 'About Andrés Canavesi - www.javaniceday.com';
+    responseJson.description = `Software Engineer and Blogger specialized in Salesforce, 
+    Node.js and Java. AWS and Heroku enthusiastic.`;
+    responseJson.pageHeader = 'About Andrés Canavesi';
+    responseJson.about = responseJson.description;
+    responseJson.keywords = 'about,andres,canavesi';
+    responseJson.headline = responseJson.title;
+    res.render('about', responseJson);
   } catch (e) {
     next(e);
   }
