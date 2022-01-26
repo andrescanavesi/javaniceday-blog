@@ -74,6 +74,8 @@ router.get('/post/:titleSeo', async (req, res) => {
     }
 
     responseJson.relatedPosts = relatedPosts;
+    if (relatedPosts) responseJson.recommendedPosts = relatedPosts.slice(0, 5);
+    else responseJson.recommendedPosts = [];
 
     if (post.title_seo === 'about') {
       responseJson.showRelatedPosts = false;
