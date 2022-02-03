@@ -103,3 +103,31 @@ Updated at: {{post.updated_at_friendly_3}}
 </p>
 
 <hr class="my-3" />
+
+<h1>Preview</h1>
+{{{post.content}}}
+
+<link id="stylesCss" as="style" rel='stylesheet' href='/stylesheets/style.css' />
+<link id="hljsCss" as="style" rel='preload' href='/stylesheets/hljs.css' />
+
+<!-- lazy loading images -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function(event) {
+
+        //load css styles after the page loaded
+        // document.getElementById('bootstrapCss').rel='stylesheet'
+        document.getElementById('hljsCss').rel='stylesheet'
+        // document.getElementById('stylesCss').rel='stylesheet'
+
+        // to load images in a lazy way
+        // lazy loads elements with default selector as '.lozad'
+        const observer = lozad();
+        observer.observe();
+    });
+</script>
