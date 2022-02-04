@@ -57,6 +57,8 @@
     <div class="container" id="postContent">
         <div class="row">
             <div class="col-xl-8">
+
+                <div class="postContent mb-2">{{{post.summary}}}</div>
                 <!-- Preview Image -->
                 <img class="lozad img-fluid rounded mx-auto"
                      src="{{post.default_loading_image}}"
@@ -64,7 +66,7 @@
 
                 <hr>
 
-                {{{post.content}}}
+                <div class="postContent">{{{post.content}}}</div>
             </div>
             <div class="col-xl-4">
 
@@ -72,25 +74,42 @@
 
                     <h1>Recommended posts</h1>
 
-      {{#each recommendedPosts}}
+                  {{#each recommendedPosts}}
 
-          <div class="container border-bottom py-2">
-              <div class="row no-gutters">
-                  <div class="col-3">
-                      <img class="lozad img-fluid"
-                           src="{{this.default_thumb_loading_image}}"
-                           data-src="{{this.thumb_image_url}}" alt="image post">
-                  </div>
-                  <div class="col-9">
-                      <a href="/post/{{this.title_seo}}" class="text-decoration-none">{{this.title}}</a>
-                  </div>
+                      <div class="container border-bottom py-2">
+                          <div class="row no-gutters">
+                              <div class="col-3">
+                                  <img class="lozad img-fluid"
+                                       src="{{this.default_thumb_loading_image}}"
+                                       data-src="{{this.thumb_image_url}}" alt="image post">
+                              </div>
+                              <div class="col-9">
+                                  <a href="/post/{{this.title_seo}}" class="text-decoration-none">{{this.title}}</a>
+                              </div>
 
-              </div>
-          </div>
+                          </div>
+                      </div>
 
 
 
-      {{/each}}
+                  {{/each}}
+                    {{#if adsenseEnabled}}
+                        <!-- Adsense -->
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9559827534748081"
+                                crossorigin="anonymous"></script>
+                        <!-- javaniceday_fixed_right_2022_02 -->
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-9559827534748081"
+                             data-ad-slot="3380578901"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    {{/if}}
+
+
                 </div>
             </div>
 

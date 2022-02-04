@@ -4,6 +4,12 @@ body{
   background-color: #212529 !important;
 }
 
+.postContent{
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
 /*code{*/
 /*  padding: .1em 1em;*/
 /*  color: rgb(29, 31, 33);*/
