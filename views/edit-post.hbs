@@ -20,7 +20,12 @@ Updated at: {{post.updated_at_friendly_3}}
 						const fileName = result.info.public_id+'.jpg';
 						console.log('file name '+fileName);
 						const currentContent = $('#content').val();
-						const url = `<img class="lozad img-fluid rounded" data-src="{{imagesBaseUrl}}${fileName}" />`;
+						const url = `
+						<figure class="figure my-3 postImage">
+						<img class="lozad img-fluid rounded" data-src="{{imagesBaseUrl}}${fileName}" />
+						<figcaption class="figure-caption text-center">Image caption</figcaption>
+						</figure>
+						`;
 						$('#content').val(currentContent+'\n'+url);
 					}
 				}

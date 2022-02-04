@@ -10,6 +10,12 @@ body{
   line-height: 1.5;
 }
 
+.postImage{
+  border: 1px solid #808080;
+  padding: 10px;
+  border-radius: 10px;
+}
+
 /*code{*/
 /*  padding: .1em 1em;*/
 /*  color: rgb(29, 31, 33);*/
