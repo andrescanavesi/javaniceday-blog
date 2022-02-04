@@ -10,10 +10,15 @@ body{
   line-height: 1.5;
 }
 
+.postFigure{
+  /*border: 1px solid #808080;*/
+  /*border-radius: 10px;*/
+  padding: 30px;
+  width: 100%;
+}
+
 .postImage{
-  border: 1px solid #808080;
-  padding: 10px;
-  border-radius: 10px;
+  margin: auto;
 }
 
 /*code{*/
@@ -41,14 +46,14 @@ h1{
 h2{
   margin-top: 1rem;
   font-weight: 600;
-  font-size: 1.50rem;
+  font-size: 1.60rem;
 }
 
 
 h3{
   margin-top: 1rem;
   font-weight: 600;
-  font-size: 1.25rem;
+  font-size: 1.50rem;
 }
 
 h4{

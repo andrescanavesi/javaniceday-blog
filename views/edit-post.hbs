@@ -21,10 +21,10 @@ Updated at: {{post.updated_at_friendly_3}}
 						console.log('file name '+fileName);
 						const currentContent = $('#content').val();
 						const url = `
-						<figure class="figure my-3 postImage">
-						<img class="lozad img-fluid rounded" data-src="{{imagesBaseUrl}}${fileName}" />
-						<figcaption class="figure-caption text-center">Image caption</figcaption>
-						</figure>
+<figure class="figure my-3 postFigure">
+  <img class="lozad img-fluid rounded postImage" data-src="{{imagesBaseUrl}}${fileName}" />
+  <figcaption class="figure-caption text-center mt-2">Image caption</figcaption>
+</figure>
 						`;
 						$('#content').val(currentContent+'\n'+url);
 					}
