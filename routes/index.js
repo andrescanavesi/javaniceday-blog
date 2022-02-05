@@ -65,6 +65,7 @@ router.get('/post/:titleSeo', async (req, res) => {
     responseJson.linkToThisPage = post.url;
     responseJson.pageImage = post.featured_image_url;
     responseJson.pageDateModified = post.updated_at_friendly_2;
+    responseJson.showDisqus = true;
 
     // const posts = await daoPosts.findRelated(post.tags, post.id);
     let relatedPosts = [];

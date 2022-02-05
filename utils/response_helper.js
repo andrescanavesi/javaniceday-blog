@@ -20,6 +20,7 @@ module.exports.getResponseJson = function (req) {
   responseJson.keywords = 'software, development';
   responseJson.searchText = '';
   responseJson.showRelatedPosts = true;
+  responseJson.showDisqus = false;
 
   const metaCache = process.env.JND_META_CACHE || '1'; // in seconds
   responseJson.metaCache = `public, max-age=${metaCache}`;
@@ -34,7 +35,7 @@ module.exports.getResponseJson = function (req) {
   responseJson.pageImage = process.env.JND_DEFAULT_IMAGE_URL;
   responseJson.pageUrl = process.env.JND_BASE_URL;
   responseJson.pageDatePublished = '2020-06-02';
-  responseJson.pageDateModified = moment().format('YYYY-MM-DD');// today
+  responseJson.pageDateModified = moment().format('YYYY-MM-DD'); // today
   responseJson.pageLogo = 'http://...'; // TODO
   responseJson.pageDescription = responseJson.description;
 
