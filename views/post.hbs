@@ -4,7 +4,7 @@
           "@context":"http://schema.org",
           "@type": "BlogPosting",
           "image": "{{post.featured_image_url}}",
-          "url": "{{post.linkToThisPage}}",
+          "url": "{{linkToThisPage}}",
           "headline": "{{post.title}}",
           "dateCreated": "{{post.created_at_friendly_2}}",
           "datePublished": "{{post.created_at_friendly_2}}",
@@ -45,7 +45,7 @@
          </a>
      </div>
 	 </a>
-	 <div class="ms-2 pt-3"><a href="/post/about" class="text-decoration-none"><span>Andrés Canavesi</span></a></div>
+	 <div class="ms-2 pt-3"><a href="/about/andres-canavesi" class="text-decoration-none"><span>Andrés Canavesi</span></a></div>
 	 <div class="ms-2 pt-3 "><span class="text-muted">{{post.created_at_friendly}}</span></div>
  </div>
 
@@ -122,10 +122,30 @@
             <hr/>
         </div>
 
+        <!-- Google search box -->
         <div class="my-3">
-            <!-- Google search box -->
             <script async src="https://cse.google.com/cse.js?cx=dd95798dbbf86f824"></script>
             <div class="gcse-search"></div>
+        </div>
+
+        <!--Disqus -->
+        <div class="my-3">
+            <div id="disqus_thread"></div>
+            <script>
+
+                const disqus_config = function () {
+                this.page.url = "{{linkToThisPage}}";
+                this.page.identifier = "{{post.id}}-{{post.title_seo}}";
+                };
+
+                (function() {
+                    const d = document, s = d.createElement('script');
+                    s.src = 'https://https-www-javaniceday-com.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
         </div>
     </div>
 
@@ -172,7 +192,7 @@
 				    <div class="text-muted">{{this.sub_title}}</div>
 
 				    <div>
-					    <a href="/post/about" class="text-decoration-none"><small>Andrés Canavesi</small></a>
+					    <a href="/about/andres-canavesi" class="text-decoration-none"><small>Andrés Canavesi</small></a>
 					    <span class="text-muted"> - </span>
 					    <small class="text-muted">{{this.created_at_friendly}}</small>
 					    <span class="text-muted"> - </span>
