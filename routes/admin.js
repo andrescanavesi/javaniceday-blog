@@ -22,11 +22,15 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
 } else {
   logger.info('non dev');
   csrfProtection = csrf({
-    cookie: true, signed: true, secure: true, httpOnly: true, sameSite: 'strict',
+    cookie: true,
+    signed: true,
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
   });
 }
 
-const parseForm = bodyParser.urlencoded({ extended: false });
+const parseForm = bodyParser.urlencoded({extended: false});
 
 /**
  *  GET default admin page
@@ -53,24 +57,75 @@ router.get('/create-post', csrfProtection, async (req, res, next) => {
     const defaultContent = `
 
     <!-- Template -->
+    
+    <h2>Table of contents</h2>
+    <ul>
+      <li><a href="#">Link 1</a></li>
+      <li><a href="#">Link 2</a></li>
+      <li><a href="#">Link 3</a></li>
+    </ul>
 
     <pre>
       <code class="javascript">
         // some code...
       </code>
     </pre>
-
-    <div class="alert alert-danger" role="alert">
-      Test alert
-    </div>
     
-    <div class="alert alert-primary" role="alert">
-      Test info
-    </div>
+    <h1>h1. Bootstrap heading</h1>
+    <h2>h2. Bootstrap heading</h2>
+    <h3>h3. Bootstrap heading</h3>
+    <h4>h4. Bootstrap heading</h4>
+    <h5>h5. Bootstrap heading</h5>
+    <h6>h6. Bootstrap heading</h6>
+    
+    <small class="text-muted">With faded secondary text</small>
+    
+    <p class="lead">
+        Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
+    </p>    
+    
+    <p>You can use the mark tag to <mark>highlight</mark> text.</p>
+    <p><del>This line of text is meant to be treated as deleted text.</del></p>
+    <p><s>This line of text is meant to be treated as no longer accurate.</s></p>
+    <p><ins>This line of text is meant to be treated as an addition to the document.</ins></p>
+    <p><u>This line of text will render as underlined</u></p>
+    <p><small>This line of text is meant to be treated as fine print.</small></p>
+    <p><strong>This line rendered as bold text.</strong></p>
+    <p><em>This line rendered as italicized text.</em></p>
+    
+    <p><abbr title="attribute">attr</abbr></p>
+<p><abbr title="HyperText Markup Language" class="initialism">HTML</abbr></p>
 
-    <div class="alert alert-warning" role="alert">
-      Test info
-    </div>
+<blockquote class="blockquote text-left">
+  <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+  <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+</blockquote>
+
+<samp>This text is meant to be treated as sample output from a computer program.</samp>
+
+<ul>
+  <li>Lorem ipsum dolor sit amet</li>
+  <li>Consectetur adipiscing elit</li>
+  <li>Integer molestie lorem at massa</li>
+  <li>Facilisis in pretium nisl aliquet</li>
+  <li>Nulla volutpat aliquam velit
+    <ul>
+      <li>Phasellus iaculis neque</li>
+      <li>Purus sodales ultricies</li>
+      <li>Vestibulum laoreet porttitor sem</li>
+      <li>Ac tristique libero volutpat at</li>
+    </ul>
+  </li>
+  <li>Faucibus porta lacus fringilla vel</li>
+  <li>Aenean sit amet erat nunc</li>
+  <li>Eget porttitor lorem</li>
+</ul>
+
+<figure class="figure my-3 postFigure">
+  <img class="lozad img-fluid rounded postImage" src="https://res.cloudinary.com/dniiru5xy/image/upload/c_scale,w_900/v1590442770/javaniceday.com/jpr5llr6ubqu2l8ootfb.jpg" data-loaded="true">
+  <figcaption class="figure-caption text-center">Image caption</figcaption>
+</figure>
+
     
     `;
 
@@ -182,7 +237,7 @@ router.post('/process-seo-list', parseForm, csrfProtection, async (req, res, nex
     responseJson.layout = 'layout-admin';
     responseJson.csv = '';
 
-    const { csv } = req.body;
+    const {csv} = req.body;
     await controllerSearchTerms.processCsv(csv);
     // res.redirect('/admin/process-seo-list');
     res.render('process-seo-list', responseJson);
